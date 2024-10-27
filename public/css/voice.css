@@ -1,0 +1,55 @@
+
+
+.animation {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 20px auto;
+}
+
+.circle {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #00f, #f0f);
+    opacity: 0;
+    animation: pulse 1.5s infinite;
+}
+
+.circle:nth-child(1) {
+    left: 50%;
+    bottom: 10%;
+    animation-delay: 0s;
+}
+
+.circle:nth-child(2) {
+    left: 30%;
+    bottom: 20%;
+    animation-delay: 0.5s;
+}
+
+.circle:nth-child(3) {
+    left: 70%;
+    bottom: 30%;
+    animation-delay: 1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+.status {
+    margin-top: 20px;
+}

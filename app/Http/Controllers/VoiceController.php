@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use DevicesReqest;
+use App\Models\Device;
+use App\Models\VoiceCommand;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class VoiceController extends Controller
+{
+   function index(){
+       $commands = VoiceCommand::where('users_id', Auth::id())->get();
+       return view('Voice.index',compact('commands'));
+   }
+   function create(){
+       $devices = Device::where('user_id',Auth::id())->get();
+       return view('Voice.create',compact('devices'));
+   }
+   function command(Request $request){
+       $validated = $request->validate([
+           'devices_id' => 'required|exists:devices,id',
+           'command' => 'required|string',
+
+       ]);
+       $command = $validated['command'];
+       Device::where('id', $validated['devices_id'])->where('user_id', Auth::id())->get()->each(function ($device) use ($command) {
+           DevicesReqest::sendReqest($device->url,$command);
+       });
+
+       return response()->json([
+           'status' => 'success',
+           'message' => 'Данные успешно обработаны',
+       ]);
+   }
+   function store(Request $request){
+        $data = $request->validate([
+            'devices_id'=>'required|exists:devices,id',
+            'command'=>'required|string',
+            'text_trigger'=>'required|string',
+            'voice' => 'string|nullable',
+        ]);
+        $data['users_id'] = Auth::id();
+        VoiceCommand::create($data);
+        return redirect()->back()->with('success','команда добавленна');
+   }
+}

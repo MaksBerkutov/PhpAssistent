@@ -1,0 +1,10 @@
+.deactivated {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+.deactivated .btn {
+    background-color: grey;
+    pointer-events: none;
+}
