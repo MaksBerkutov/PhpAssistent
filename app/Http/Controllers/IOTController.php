@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 class IOTController extends Controller
 {
     public function receive(request $request){
-        Log::debug("request receive11111");
         $jsonData = json_decode($request["message"]);
         $devices = Device::where('name_board', $request["name"])->get();
         foreach ($devices as $device){

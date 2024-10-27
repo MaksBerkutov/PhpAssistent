@@ -48,14 +48,12 @@ class ScenarioController extends Controller
     public function store(request $request){
 
         $request->validate($this->getValidator());
-        // Сохранение логирования, если выбрано
         $scenarioLogId = null;
         if (in_array('log', $request->actions)) {
             $log = ScenarioLog::create(['format' => $request->log_format]);
             $scenarioLogId = $log->id;
         }
 
-        // Сохранение базы данных, если выбрано
         $scenarioDbId = null;
         if (in_array('save_db', $request->actions)) {
             $db = ScenarioDb::create([
@@ -69,14 +67,12 @@ class ScenarioController extends Controller
             $scenarioDbId = $db->id;
         }
 
-        // Сохранение уведомления, если выбрано
         $scenarioNotifyId = null;
         if (in_array('notify', $request->actions)) {
             $notify = ScenarioNotify::create(['format' => $request->notification_message,'type'=>$request->notification_type]);
             $scenarioNotifyId = $notify->id;
         }
 
-        // Сохранение модуля, если выбрано
         $scenarioModuleId = null;
         if (in_array('change_state', $request->actions)) {
             $module = ScenarioModule::create([
@@ -86,7 +82,6 @@ class ScenarioController extends Controller
             $scenarioModuleId = $module->id;
         }
 
-        // Сохранение API, если выбрано
         $scenarioApiId = null;
         if (in_array('send_api', $request->actions)) {
             $api = ScenarioApi::create([
@@ -96,7 +91,6 @@ class ScenarioController extends Controller
             $scenarioApiId = $api->id;
         }
 
-        // Сохранение основного сценария
         Scenario::create([
             'users_id' => Auth::id(),
             'devices_id' => $request->devices_id,
@@ -215,7 +209,6 @@ class ScenarioController extends Controller
             'scenario_modules_id' => $scenarioModuleId,
         ]);
 
-        // Перенаправляем на страницу со списком сценариев с сообщением об успехе
         return redirect()->route('scenario')->with('success', 'Сценарий успешно обновлён.');
     }
 

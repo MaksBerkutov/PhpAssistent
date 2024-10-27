@@ -3,7 +3,7 @@
         <h5 class="card-title">Настройки изменения состояния модуля</h5>
         <x-device-choose name="change_module" :devices="$devices"
                          label="Выберите модуль для изменения состояния"
-                         old="{{isset($scenario)?optional($scenario->scenarioModule)->devices_id:''}}"></x-device-choose>
+                         old="{{isset($scenario)?optional($scenario->scenarioModule)->devices_id:''}}"/>
 
         <x-device-cmd-choose name="change_command" deviceChoseName="change_module"
                              old="{{isset($scenario)?optional($scenario->scenarioModule)->command:''}}"

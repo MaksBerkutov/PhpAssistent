@@ -51,9 +51,10 @@ if (!SpeechRecognition||!SpeechSynthesis) {
     }
     function speak(text) {
         const utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.cancel();
         utterance.lang = 'ru-RU';
         utterance.pitch = 1;
+        speechSynthesis.speak(utterance);
 
-        window.speechSynthesis.speak(utterance);
     }
 }

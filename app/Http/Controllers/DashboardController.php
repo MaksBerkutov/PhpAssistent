@@ -15,7 +15,8 @@ class DashboardController extends Controller
         return view('Dashboard.index',compact('widgets'));
     }
     public function create($access = null){
-        $widgets = $access==null?Widget::where('is_private', false)->get():Widget::where('accesses_key', $access)->get();
+        $widgets = $access==null?Widget::where('is_private', false)->get():
+            Widget::where('accesses_key', $access)->get();
         return view('Dashboard.create',compact('widgets'));
     }
     public function add($id){

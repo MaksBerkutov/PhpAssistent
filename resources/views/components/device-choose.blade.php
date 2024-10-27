@@ -5,7 +5,9 @@
         <option value="">Выберите модуль</option>
         @foreach ($devices as $device)
             <option data-commands="{{ json_encode($device->command) }}" value="{{ $device->id }}" {{ old($name,$old) == $device->id ? 'selected' : '' }}>
-                {{ $device->name }}</option>
+                {{ $device->name }}
+
+            <x-online-status status="{{$device->available}}"/></option>
         @endforeach
     </select>
     @error($name)

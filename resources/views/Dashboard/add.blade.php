@@ -14,24 +14,12 @@
             </div>
             <div class="mb-3">
                 <label for="module" class="form-label">Модуль</label>
-                <select id="module" name="device_id" class="form-select @error('device_id') is-invalid @enderror" required>
-                    <option value="">Выберите модуль</option>
-                    @foreach($devices as $device)
-                        <option data-commands="{{ json_encode($device->command) }}" value="{{ $device->id }}" {{ old('device_id') == $device->id ? 'selected' : '' }}>{{ $device->name }}</option>
-                    @endforeach
-                </select>
-                @error('device_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <x-device-choose name="device_id" :devices="$devices"
+                                 label="Выберите модуль"/>
             </div>
             <div class="mb-3">
-                <label for="command" class="form-label">Команда для модуля</label>
-                <select id="command" name="command" class="form-select @error('command') is-invalid @enderror">
-                    <option value="">Выберите команду</option>
-                </select>
-                @error('command')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <x-device-cmd-choose name="command" deviceChoseName="device_id"
+                                     label="Команда для модуля"/>
             </div>
             <div class="mb-3">
                 <label for="key" class="form-label">Ключ</label>
@@ -49,13 +37,8 @@
                     @if($value=='command')
                         @php($arrayCommandID[]=$key)
                         <div class="mb-3">
-                            <label for="{{$key}}" class="form-label">Команда для {{$key}}</label>
-                            <select id="{{$key}}" name="{{$key}}" class="form-select @error($key) is-invalid @enderror">
-                                <option value="">Выберите команду</option>
-                            </select>
-                            @error($key)
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <x-device-cmd-choose name="{{$key}}" deviceChoseName="device_id"
+                                                 label="Команда для {{$key}}"/>
                         </div>
                     @elseif($value=='text')
                         <div class="mb-3">
@@ -88,41 +71,9 @@
 
                 document.getElementById('values').value = JSON.stringify(formData);
             });
-            document.getElementById('module').addEventListener('change', function (){
-                ChangeCommand('command');
-                @foreach($arrayCommandID as $command)
-                ChangeCommand('{{$command}}');
-                @endforeach
-            });
 
-            ChangeCommand('command');
-            function ChangeCommand(name) {
 
-                const module = document.getElementById('module');
-
-                const commandSelect = document.getElementById(name);
-                console.log(commandSelect)
-                commandSelect.innerHTML = '<option value="">Выберите команду</option>';
-
-                const selectedModule = module.options[module.selectedIndex];
-                console.log(selectedModule)
-                const commands = selectedModule.getAttribute('data-commands');
-                if (commands) {
-                    const commandArray = JSON.parse(JSON.parse(commands));
-                    //console.log(typeof commandArray)
-
-                    commandArray.forEach(command => {
-                        const option = document.createElement('option');
-                        option.value = command;
-                        option.textContent = command;
-                        if(command == '{{ old('change_command')}}')
-                            option.selected = true;
-
-                        commandSelect.appendChild(option);
-                    });
-                }
-
-        }});
+        });
     </script>
 @endsection
 
