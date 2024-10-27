@@ -1,6 +1,6 @@
 # SmartHome Web Server
 
-![Smart Home](https://github.com/MaksBerkutov/PhpAssistent/git-files/image/logo.png)  <!-- Замените на URL изображения -->
+![Smart Home](https://github.com/MaksBerkutov/PhpAssistent/blob/main/git-files/image/logo.png)  <!-- Замените на URL изображения -->
 
 ## Описание
 
