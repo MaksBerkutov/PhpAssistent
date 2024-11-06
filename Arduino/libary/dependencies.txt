@@ -1,5 +1,0 @@
-Adafruit_SSD1306.h
-Wire.h
-AESLib.h
-arduino_base64.hpp
-ArduinoJson.h

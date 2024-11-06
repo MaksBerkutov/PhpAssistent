@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::middleware('IOT')->group(function () {
     Route::post('/iot/receive', [App\Http\Controllers\IOTController::class,'receive']);
 });
@@ -27,6 +28,7 @@ Route::middleware('guest')->group(function () {
 });
 Route::middleware('auth')->group(function () {
     //Home
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
     //Devices
