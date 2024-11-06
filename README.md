@@ -1,6 +1,6 @@
 # SmartHome Web Server
 
-![Smart Home](https://github.com/MaksBerkutov/PhpAssistent/blob/main/git-files/image/logo.png)  <!-- Замените на URL изображения -->
+![Smart Home](https://github.com/MaksBerkutov/PhpAssistent/blob/main/git-files/image/logo.png) 
 
 ## Описание
 
@@ -30,13 +30,28 @@ SmartHome Web Server — это мощное решение для управл�
     ```
 3. Настройте параметры вашего сервера в файле `.env`.
    - укажите поли с AES ключом `AES=YOUR_AES_KEY`
-   -  (! Опционально) укажите команду инициализации `INILIZATION_COMMAND=YOUR_INIT_CMD`
-
-4. Настройка Apache2 на ваш локальный ip адрес.
-5. Установка библиотек для Arduino ``\Arduino\libary`` и зависимостей.
-6. Настройка Arduino IDE 
-7. В скетче укажите имя платы `String NameBoard = "BOARD_NAME";`
-8. Прошейте нужное вам количество модулей, заранее получите их IP адреса используя COM или настройки роутера.
+   - вставьте строчку `INILIZATION_COMMAND=SERV_GAI`
+   - Настройте SMTP
+   ```
+    MAIL_MAILER=smtp
+    MAIL_HOST=YOUR_HOST
+    MAIL_PORT=PORT
+    MAIL_USERNAME=USERNAME
+    MAIL_PASSWORD=PASSWORD
+    MAIL_ENCRYPTION=ssl
+    MAIL_FROM_ADDRESS=ADRESS
+    MAIL_FROM_NAME="${APP_NAME}"
+   ```
+   - Настройте подключение к локальной БД
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=HOST
+    DB_PORT=3306
+    DB_DATABASE=BD_NAME
+    DB_USERNAME=USERNAME
+    DB_PASSWORD=PASSWORD
+   ```
+4. Настройте **Apache2** на ваш локальный ip адрес.
 ## Использование
 
 После успешной установки и запуска сервера, откройте веб-браузер и перейдите по адресу:
@@ -95,13 +110,17 @@ http://YOUR_IP/login
         - Введите формат запроса сайта к примеру `{data:{"{key}":"{data}"}}`.
 5) Нажмите на кнопку создать сценарий.
 ### Управление сценариями
- 
+## Ссылки
+- **[ESP Libary](https://github.com/MaksBerkutov/AssistentLibary)**
+
+    
 ## Лицензия
 Этот проект лицензируется на условиях MIT License. 
 
 ## Контакты
 
-Если у вас есть вопросы, не стесняйтесь связаться с нами:
+**Maks Berkutov**
 
-Email: 07012004maks@gmail.com
-GitHub: MaksBerkutov
+- [Telegram](https://t.me/i37Holodok73i)
+- [GitHub](https://github.com/MaksBerkutov)
+- [Email](mailto:0701200maks@gmail.com)
