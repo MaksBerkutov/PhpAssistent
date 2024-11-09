@@ -37,6 +37,7 @@
 
                                     @endforeach
                                 </form>
+                                @if($device->ota)
                                 <form method="post" action="{{route('devices.firmware')}}" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{$device->id}}">
@@ -53,7 +54,7 @@
                                     </div>
                                     @enderror
                                 </form>
-
+                                @endif
                             </div>
                         </div>
                         <div class="card-footer text-muted">

@@ -46,6 +46,7 @@ class DeviceController extends Controller
             $validated["user_id"] = Auth::id();
            $initCommand = explode('.',DevicesReqest::sendReqest( $validated["url"],env("INILIZATION_COMMAND")));
             $validated["name_board"] = array_shift($initCommand);
+            $validated["ota"] = array_shift($initCommand);
             $validated["command"] = json_encode($initCommand);
             Device::create($validated);
             return redirect()->route('devices.create')->with('success', 'Device added successfully!');

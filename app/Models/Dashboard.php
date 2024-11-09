@@ -19,6 +19,7 @@ class Dashboard extends Model
         'name',
         'key',
         'values',
+        'ota'
     ];
     public function widget()
     {
