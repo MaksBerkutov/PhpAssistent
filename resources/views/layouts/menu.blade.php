@@ -78,7 +78,7 @@ function MenuGuard(string $GuardString):bool{
 }
 @endphp
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -87,17 +87,38 @@ function MenuGuard(string $GuardString):bool{
     <link rel="stylesheet" href="{{asset('css/menu.css')}}">
 
     <title>@yield('title',ucwords(Route::currentRouteName()))</title>
-    @yield('styles',"");
+    @yield('styles',"")
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
->
 </head>
+<style>
+    .alertRotate{
+        display: none;
+    }
+    @media (orientation: portrait)and (max-width: 600px) {
+        #main , #navbar{
+            display: none;
+        }
+
+
+        .alertRotate{
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            color: white;
+            text-align: center;
+
+        }
+    }
+</style>
+
 <body>
 
-<nav id="navbar" style="z-index: 1;">
+<nav id="navbar" style="z-index: 1">
     <ul class="navbar-items flexbox-col">
         <li class="navbar-logo navbar-item flexbox-left" >
             <a class="navbar-item-inner flexbox">
@@ -150,7 +171,11 @@ function MenuGuard(string $GuardString):bool{
     @endif
     @yield('content')
 </main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<div class="alertRotate">
+    <iframe src="https://giphy.com/embed/PfY4nKis93ZHXMywps" width="270" height="480" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

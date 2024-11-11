@@ -1,6 +1,7 @@
 @if ($status)
-    <ion-icon name="eye-outline" style="color: green;"></ion-icon> Онлайн
+    <span class="badge bg-success" style="font-size: 15px"><ion-icon name="eye-outline"></ion-icon> Онлайн</span>
+
 @else
-    <ion-icon name="eye-off-outline" style="color: red;"></ion-icon> Офлайн
+    <span class="badge bg-danger" style="font-size: 15px"><ion-icon name="eye-off-outline" ></ion-icon> Офлайн</span>
 @endif
 

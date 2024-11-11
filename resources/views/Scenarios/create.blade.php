@@ -2,7 +2,7 @@
 @section('title', 'Arduino Scenario Сreate')
 
 @section('content')
-    <div class="container">
+    <div class="container" >
         <form action="{{ route('scenario.store') }}" method="POST">
             @csrf
             <!-- Выбор модуля -->
