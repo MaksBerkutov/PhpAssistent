@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('devices', function (Blueprint $table) {
-            $table->boolean('ota');
-
+        Schema::table('scenario_modules', function (Blueprint $table) {
+            $table->string('arg')->nullable()->default(null);
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('devices', function (Blueprint $table) {
-            $table->dropColumn('ota');
+        Schema::table('scenario_modules', function (Blueprint $table) {
+            $table->dropColumn('arg');
         });
     }
 };

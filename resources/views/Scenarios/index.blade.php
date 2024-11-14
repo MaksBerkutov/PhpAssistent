@@ -63,6 +63,7 @@
                                         <h5 class="card-title">Изменить состояние модуля</h5>
                                         <p><strong>Модуль:</strong> {{ optional($scenario->scenarioModule->device)->name ?? 'Неизвестное устройство'  }}</p>
                                         <p><strong>Команда:</strong> {{ $scenario->scenarioModule->command }}</p>
+                                        <p><strong>Аргумент:</strong> {{ $scenario->scenarioModule->arg }}</p>
                                     </div>
                                 </div>
                             @else

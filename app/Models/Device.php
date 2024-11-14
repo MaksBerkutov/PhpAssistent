@@ -17,7 +17,8 @@ class Device extends Model
         'user_id',
         'command',
         'name_board',
-        'available'
+        'available',
+        'ota'
     ];
 
 }

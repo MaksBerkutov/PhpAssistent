@@ -13,7 +13,8 @@ class ScenarioModule extends Model
     use HasFactory;
     protected $fillable = [
         'devices_id',
-        'command'
+        'command',
+        'arg'
     ];
     public function device()
     {

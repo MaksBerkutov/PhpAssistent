@@ -41,6 +41,7 @@ class ScenarioController extends Controller
             'notification_type' => 'nullable|string',
             'change_module' => 'nullable|exists:devices,id',
             'change_command' => 'nullable|string',
+            'change_arg'=>'nullable|string',
             'api_url' => 'nullable|url',
             'api_body' => 'nullable|string',
         ];
@@ -78,6 +79,7 @@ class ScenarioController extends Controller
             $module = ScenarioModule::create([
                 'devices_id' => $request->change_module,
                 'command' => $request->change_command,
+                'arg'=>$request->change_arg,
             ]);
             $scenarioModuleId = $module->id;
         }
@@ -176,7 +178,7 @@ class ScenarioController extends Controller
 
         $scenarioModuleId = $this->update_scanries($scenario->scenario_modules_id,'change_state',$request->actions,ScenarioModule::class, function($object) use ($request){
             return $object->update(['devices_id' => $request->change_module,
-                'command' => $request->change_command,]);
+                'command' => $request->change_command,'arg'=>$request->change_arg,]);
         },
             function() use ($request){
                 return ScenarioModule::create([

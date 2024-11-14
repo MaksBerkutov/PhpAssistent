@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use function PHPUnit\Framework\isEmpty;
 
 class DeviceController extends Controller
 {
@@ -22,13 +23,15 @@ class DeviceController extends Controller
         $validated = $request->validate([
             'command' => ['required', 'string', 'max:255'],
             'url' => 'required',
+            'arg'=>['string','nullable','max:255']
         ]);
-        $response = DevicesReqest::sendReqest( $validated["url"],$validated["command"]);
+
+        $response = DevicesReqest::sendReqest( $validated["url"],$validated["command"],$validated["arg"]);
         if(str_ends_with($validated["command"], "_REC")){
             $response = json_decode($response);
             return view('Devices.response',compact('response',"validated"));
         }
-        return back();
+        return redirect()->back()->withInput();
     }
     public function create()
     {

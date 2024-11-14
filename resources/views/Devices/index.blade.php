@@ -36,6 +36,13 @@
                                         @endphp
 
                                     @endforeach
+                                    <div class="form-group">
+                                        <label for="arg">Аргумент</label>
+                                        <input type="text" class="form-control @error('arg') is-invalid @enderror" id="arg" name="arg" value="{{ $device->url==old('url')? old('arg'):"" }}" >
+                                        @error('arg')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </form>
                                 @if($device->ota)
                                 <form method="post" action="{{route('devices.firmware')}}" enctype="multipart/form-data">

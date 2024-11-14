@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Log;
 
 class DevicesReqest
 {
-    public static function sendReqest(string $url,string $message){
+    public static function sendReqest(string $url,string $message,string $arg = ""){
         $AES = new AESService();
         $url = "http://$url/command";
-        $jsonData = json_encode($AES->Encrypt(['command'=>$message]));
+        $jsonData = json_encode($AES->Encrypt(['command'=>$message,'arg'=>$arg]));
         $ch = curl_init($url);
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
