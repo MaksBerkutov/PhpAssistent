@@ -35,7 +35,7 @@ class IOTController extends Controller
             Log::log($scenario->scenarioLog->type,str_replace(['{key}', '{value}'], [$key, $value], $scenario->scenarioLog->format));
         if($scenario->scenarioModule){
             Log::debug("SUCSS SEND");
-            DevicesReqest::sendReqest( $scenario->scenarioModule->device->url,$scenario->scenarioModule->command);
+            DevicesReqest::sendReqest( $scenario->scenarioModule->device->url,$scenario->scenarioModule->command,$scenario->scenarioModule->arg);
         }
 
         //db,notify,api позже

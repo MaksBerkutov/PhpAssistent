@@ -20,7 +20,7 @@ class CheckModule
         try {
             $data = $request->json()->all();
 
-            $message = $data['message'] ?? throw new Exception('Field [message] not found');
+            $message = $data['message'] ?? throw new Exception( $request->json());
             $iv = $data['IV'] ?? throw new Exception('Field [IV] not found');
             $name = $data['name'] ?? throw new Exception('Field [name] not found');
             $decryptMessage = AES::Decrypt($message, $iv);
