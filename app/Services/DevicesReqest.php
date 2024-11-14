@@ -4,13 +4,15 @@ namespace App\Services;
 use App\Services\AES as AESService;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use function PHPUnit\Framework\isEmpty;
 
 class DevicesReqest
 {
-    public static function sendReqest(string $url,string $message,string $arg = ""){
+    public static function sendReqest(string $url,string $message,?string $arg = ""){
         $AES = new AESService();
         $url = "http://$url/command";
-        $jsonData = json_encode($AES->Encrypt(['command'=>$message,'arg'=>$arg]));
+        if(is_null($arg))$arg="";
+        $jsonData = json_encode($AES->Encrypt(  ['command'=>$message,'arg'=>$arg]));
         $ch = curl_init($url);
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
