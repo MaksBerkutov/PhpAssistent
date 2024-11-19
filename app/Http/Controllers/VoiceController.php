@@ -45,4 +45,23 @@ class VoiceController extends Controller
         VoiceCommand::create($data);
         return redirect()->back()->with('success','команда добавленна');
    }
+   function getAllVoicesCommands(){
+       $commands = VoiceCommand::where('users_id', Auth::id())->get();
+       $onlyTextCommand = $commands->map(function ($command) {
+           return $command->text_trigger;
+       });
+       return response()->json($onlyTextCommand);
+   }
+   function Go_Command(Request $request){
+       $data = $request->json()->all();
+
+       $command = VoiceCommand::where('users_id', Auth::id())->where('text_trigger',$data['text_trigger'])->get()->first();
+       if($command!=null){
+           Device::where('id', $command->devices_id)->where('user_id', Auth::id())->get()->each(function ($device) use ($command) {
+               DevicesReqest::sendReqest($device->url,$command->command);
+           });
+       }
+
+   }
+
 }

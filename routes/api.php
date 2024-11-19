@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/login', [\App\Http\Controllers\ApiAuthController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [\App\Http\Controllers\ApiAuthController::class, 'logout']);
+    Route::get('/commands', [\App\Http\Controllers\VoiceController::class, 'getAllVoicesCommands']);
+    Route::post('/command/action', [\App\Http\Controllers\VoiceController::class, 'Go_Command']);
+});

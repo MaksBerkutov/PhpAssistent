@@ -87,7 +87,6 @@ class DeviceController extends Controller
             ],
         ]);
 
-        // Обработка ответа от ESP8266 (если нужно)
         if ($response->getStatusCode() == 200) {
             Log::info('Обновление прошивки успешно отправлено на устройство ' . $ip);
         } else {

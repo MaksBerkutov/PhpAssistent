@@ -23,7 +23,7 @@ class WidgetLight extends Widget
                 throw new Exception("No commands");
             $this->command_on = $data->command_on;
             $this->command_off = $data->command_off;
-            $this->is_light = !($this->value=='open');
+            $this->is_light = !($this->value=='true');
         }
         catch (\Exception $e) {
             return redirect()->route('home')->with('error', $e->getMessage());
