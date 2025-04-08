@@ -15,7 +15,6 @@ class DeviceController extends Controller
 {
     public function index(){
         $devices = Device::where('user_id',  Auth::user()->id)->get();
-
         return view('Devices.index',compact('devices'));
     }
 
@@ -50,6 +49,7 @@ class DeviceController extends Controller
            $initCommand = explode('.',DevicesReqest::sendReqest( $validated["url"],env("INILIZATION_COMMAND")));
             $validated["name_board"] = array_shift($initCommand);
             $validated["ota"] = array_shift($initCommand);
+            $validated["configuration"] = array_shift($initCommand);
             $validated["command"] = json_encode($initCommand);
             Device::create($validated);
             return redirect()->route('devices.create')->with('success', 'Device added successfully!');
@@ -76,6 +76,35 @@ class DeviceController extends Controller
         $this->sendFirmwareUpdate($device->url,url( Storage::url("$path/$fileName")));
         return redirect()->route('devices')->with('success', "Успешно загруженно");
 
+    }
+    public function setConfigure(Request $request)
+    {
+        $validated = $request->validate([
+            'jsonData' => ['required','string'],
+            'id' => ['required','exists:devices,id'],
+        ]);
+        $device = Device::findOrFail($validated['id']);
+        if($device->user_id!=Auth::id()){
+            return redirect()->route('devices')->with('error', "Вы не имеете доступа к этому модулю!");
+        }
+        $responce = DevicesReqest::sendReqest($device->url,env("SET_CFG_COMMAND"),$validated["jsonData"]);
+        return redirect()->route('devices')->with('success', "Успешно обновлён конфиг");
+    }
+    public function getConfigure(Request $request)
+    {
+        $request->validate([
+            'id' => ['required','exists:devices,id'],
+        ]);
+        $device = Device::findOrFail($request['id']);
+        if($device->user_id!=Auth::id()){
+            return redirect()->route('devices')->with('error', "Вы не имеете доступа к этому модулю!");
+        }
+
+        $id = $request['id'];
+        $jsonData = DevicesReqest::sendReqest($device->url,env("GET_CFG_COMMAND"));
+
+
+        return view('Devices.config',compact('jsonData','id'));
     }
     protected function sendFirmwareUpdate($ip, $url)
     {

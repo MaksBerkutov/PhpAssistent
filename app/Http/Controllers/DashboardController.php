@@ -31,6 +31,7 @@ class DashboardController extends Controller
             'command' => ['required','string'],
             'key' => ['required','string'],
             'values' => ['required','string'],
+            'argument' => ['nullable','string'],
             'name' => ['required','string'],
         ]);
         $validate['user_id'] = Auth::id();

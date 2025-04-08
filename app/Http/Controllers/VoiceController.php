@@ -22,11 +22,13 @@ class VoiceController extends Controller
        $validated = $request->validate([
            'devices_id' => 'required|exists:devices,id',
            'command' => 'required|string',
+           'arg' => 'nullable|string',
 
        ]);
        $command = $validated['command'];
-       Device::where('id', $validated['devices_id'])->where('user_id', Auth::id())->get()->each(function ($device) use ($command) {
-           DevicesReqest::sendReqest($device->url,$command);
+       $arg = $validated['arg'];
+       Device::where('id', $validated['devices_id'])->where('user_id', Auth::id())->get()->each(function ($device) use ($command, $arg) {
+           DevicesReqest::sendReqest($device->url,$command,$arg);
        });
 
        return response()->json([

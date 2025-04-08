@@ -11,7 +11,9 @@
                                      :device_id="$widget->device_id"
                                      :command="$widget->command"
                                      :key="$widget->key"
+                                     :argument="$widget->argument"
                                      :name="$widget->name"
+                                     :id="$widget->id"
                                      :data="json_decode($widget->values)">
                 </x-dynamic-component>
             @endforeach

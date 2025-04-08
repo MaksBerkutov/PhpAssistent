@@ -18,7 +18,8 @@ class Device extends Model
         'command',
         'name_board',
         'available',
-        'ota'
+        'ota',
+        'configuration'
     ];
 
 }

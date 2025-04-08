@@ -13,16 +13,22 @@ class WidgetLight extends Widget
      */
     public bool $is_light = false;
     public string $command_on ="";
+    public string $arg_command_on ="";
     public string $command_off="";
-    public function __construct(bool $available,string $device_url, string $device_id, string $command, string $key,string $name,mixed $data)
+    public string $arg_command_off="";
+    public function __construct(string $id,string $available,string $device_url, string $device_id, string $command, string $key,mixed $argument,string $name,mixed $data)
     {
         try {
-            parent::__construct($available,$device_url, $device_id, $command, $key, $name);
+            parent::__construct($id,$available,$device_url, $device_id, $command, $key,$argument, $name);
             if(!property_exists( $data,'command_on')||
-                !property_exists( $data,'command_off'))
+                !property_exists( $data,'command_off')||
+                !property_exists( $data,'arg_command_on')||
+                !property_exists( $data,'arg_command_off'))
                 throw new Exception("No commands");
             $this->command_on = $data->command_on;
             $this->command_off = $data->command_off;
+            $this->arg_command_on = $data->arg_command_on;
+            $this->arg_command_off = $data->arg_command_off;
             $this->is_light = !($this->value=='true');
         }
         catch (\Exception $e) {

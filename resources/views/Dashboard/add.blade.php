@@ -22,6 +22,11 @@
                                      label="Команда для модуля"/>
             </div>
             <div class="mb-3">
+
+             <x-device-arg-cmd-choose name="argument"
+                                     label="Аргумент для модуля"/>
+            </div>
+            <div class="mb-3">
                 <label for="key" class="form-label">Ключ</label>
                 <input type="text" id="key" name="key" class="form-control @error('key') is-invalid @enderror" required value="{{ old('key') }}">
                 @error('key')
@@ -39,6 +44,8 @@
                         <div class="mb-3">
                             <x-device-cmd-choose name="{{$key}}" deviceChoseName="device_id"
                                                  label="Команда для {{$key}}"/>
+                            <x-device-arg-cmd-choose name="arg_{{$key}}"
+                                                     label="Аргумент для {{$key}}"/>
                         </div>
                     @elseif($value=='text')
                         <div class="mb-3">

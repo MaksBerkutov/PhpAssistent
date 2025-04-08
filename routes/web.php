@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/devices', [App\Http\Controllers\DeviceController::class, 'send_command'])->name('devices.send');
     Route::get('/devices/create', [App\Http\Controllers\DeviceController::class, 'create'])->name('devices.create');
     Route::post('/devices/create', [App\Http\Controllers\DeviceController::class, 'store'])->name('devices.store');
+    Route::get('/devices/configure', [App\Http\Controllers\DeviceController::class, 'getConfigure'])->name('devices.configure');
+    Route::post('/devices/configure', [App\Http\Controllers\DeviceController::class, 'setConfigure'])->name('devices.configure');
     Route::post('/devices/firmware', [App\Http\Controllers\DeviceController::class, 'upload_firmware'])->name('devices.firmware');
     //Dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');

@@ -62,6 +62,13 @@
                                     @enderror
                                 </form>
                                 @endif
+                                @if($device->configuration)
+                                    <form method="get" action="{{route('devices.configure')}}" >
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$device->id}}">
+                                        <button type="submit" class="btn btn-outline-warning">Получить конфиг</button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                         <div class="card-footer text-muted">

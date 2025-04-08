@@ -38,7 +38,7 @@
         <div class="card-body ">
             <ion-icon name="sunny-outline" style="font-size: 50px;"></ion-icon>
             <h5 class="card-title mt-3">Свет</h5>
-            <p class="card-text">Состояние: <span id="light-status">Включен</span></p>
+            <p class="card-text">Состояние: <span id="light-status-{{$name}}-{{$id}}">Включен</span></p>
 
 
         </div>
@@ -46,19 +46,22 @@
 </div>
 <script>
     function ChangeCheckBox{{$device_id}}{{$command}}{{$key}}(event){
-        const status  = document.getElementById('light-status')
+        const status  = document.getElementById('light-status-{{$name}}-{{$id}}')
 
         if(!event.target.checked){
             PostSend({
                 devices_id:"{{$device_id}}",
-                command:"{{$command_on}}"
+                command:"{{$command_on}}",
+                arg:"{{$arg_command_on}}"
+
             })
             status.innerHTML='Включен'
         }
         else{
             PostSend({
                 devices_id:"{{$device_id}}",
-                command:"{{$command_off}}"
+                command:"{{$command_off}}",
+                arg:"{{$arg_command_off}}"
             })
             status.innerHTML='Выключен'
 
