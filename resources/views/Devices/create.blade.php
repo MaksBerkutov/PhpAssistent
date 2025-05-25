@@ -3,13 +3,13 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-center ion-fade-in">Добавить новое устройство</h1>
+        <h1 class="text-center ion-fade-in">Додати новий пристрій</h1>
 
         <form action="{{ route('devices.store') }}" method="POST">
             @csrf
 
             <div class="form-group">
-                <label for="name">Имя устройства (используеться только для отображения)</label>
+                <label for="name">Ім'я пристрою (використовується лише для відображення)</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                 @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>

@@ -18,7 +18,7 @@
 @endphp
 @section('content')
     <div class="container mt-5">
-        <h2>Редактирование сценария</h2>
+        <h2>Редагування сценарію</h2>
 
         <form action="{{ route('scenario.update', $scenario->id) }}" method="POST">
             @csrf
@@ -28,7 +28,7 @@
                 <label for="module" class="form-label">Модуль</label>
                 <select id="module" name="devices_id" class="form-select @error('devices_id') is-invalid @enderror"
                     required>
-                    <option value="">Выберите модуль</option>
+                    <option value="">Виберіть модуль</option>
                     @foreach ($devices as $device)
                         <option value="{{ $device->id }}"
                             {{ old('devices_id', $scenario->devices_id) == $device->id ? 'selected' : '' }}>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="value" class="form-label">Значение</label>
+                <label for="value" class="form-label">Значення</label>
                 <input type="text" id="value" name="value"
                     class="form-control @error('value') is-invalid @enderror" required
                     value="{{ old('value', $scenario->value) }}">
@@ -60,20 +60,20 @@
             </div>
 
             <div class="mb-3">
-                <label for="actions" class="form-label">Выберите действие(я)</label>
+                <label for="actions" class="form-label">Виберіть дію(ї)</label>
                 <select id="actions" name="actions[]" class="form-select @error('actions') is-invalid @enderror" multiple
                     required>
                     <option value="log" {{ in_array('log', old('actions', $selcetedItems)) ? 'selected' : '' }}>
-                        Логировать данные</option>
+                        Логування данних</option>
                     <option value="save_db" {{ in_array('save_db', old('actions', $selcetedItems)) ? 'selected' : '' }}>
-                        Записать в базу данных</option>
+                        Записати до бази даних</option>
                     <option value="notify" {{ in_array('notify', old('actions', $selcetedItems)) ? 'selected' : '' }}>
-                        Отправить уведомление</option>
+                        Надіслати повідомлення</option>
                     <option value="change_state"
-                        {{ in_array('change_state', old('actions', $selcetedItems)) ? 'selected' : '' }}>Изменить состояние
-                        модуля</option>
+                        {{ in_array('change_state', old('actions', $selcetedItems)) ? 'selected' : '' }}>Змінити стан модуля
+                    </option>
                     <option value="send_api" {{ in_array('send_api', old('actions', $selcetedItems)) ? 'selected' : '' }}>
-                        Отправить на внешний API</option>
+                        Надіслати на зовнішній API</option>
                 </select>
                 @error('actions')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -93,7 +93,7 @@
 
             </div>
 
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Зберегти</button>
         </form>
     </div>
     <script>

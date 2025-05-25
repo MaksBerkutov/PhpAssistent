@@ -6,7 +6,7 @@
 @section('content')
 
     <div class="container mt-5">
-        <h1>Редактирование данных</h1>
+        <h1>Редагування даних</h1>
 
         <form method="post" action="{{route('devices.configure')}}" >
             @csrf
@@ -31,7 +31,7 @@
             <input type="hidden" id="jsonData" name="jsonData">
             <input type="hidden"  name="id" value="{{$id}}">
 
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Зберегти</button>
         </form>
     </div>
 

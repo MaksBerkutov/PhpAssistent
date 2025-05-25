@@ -49,7 +49,7 @@
                                     @csrf
                                     <input type="hidden" name="id" value="{{$device->id}}">
                                     <input type="file" name="firmware" accept=".bin" class="form-control my-3">
-                                    <button type="submit" class="btn btn-outline-warning">Обновить</button>
+                                    <button type="submit" class="btn btn-outline-warning">Оновити</button>
                                     @error('id')
                                     <div class="text-danger">
                                         {{ $message }}
@@ -66,7 +66,7 @@
                                     <form method="get" action="{{route('devices.configure')}}" >
                                         @csrf
                                         <input type="hidden" name="id" value="{{$device->id}}">
-                                        <button type="submit" class="btn btn-outline-warning">Получить конфиг</button>
+                                        <button type="submit" class="btn btn-outline-warning">Отримати конфіг</button>
                                     </form>
                                 @endif
                             </div>

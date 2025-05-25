@@ -1,8 +1,8 @@
 <div id="state-card" class="card mb-3 d-none">
     <div class="card-body">
-        <h5 class="card-title">Настройки изменения состояния модуля</h5>
+        <h5 class="card-title">Налаштування зміни стану модуля</h5>
         <x-device-choose name="change_module" :devices="$devices"
-                         label="Выберите модуль для изменения состояния"
+                         label="Виберіть модуль для зміни стану"
                          old="{{isset($scenario)?optional($scenario->scenarioModule)->devices_id:''}}"/>
 
         <x-device-cmd-choose name="change_command" deviceChoseName="change_module"

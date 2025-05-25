@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class ScenarioController extends Controller
 {
     public function index( ){
-        //$scenarios = Scenario::with(['devices', 'scenarioModule'])->get();
         $scenarios = Scenario::all();
         return view('Scenarios.index', compact('scenarios'));
     }
@@ -104,7 +103,7 @@ class ScenarioController extends Controller
             'scenario_notifies_id' => $scenarioNotifyId,
             'scenario_modules_id' => $scenarioModuleId,
         ]);
-        return redirect()->route('scenario')->with('success', 'Сценарий успешно создан');
+        return redirect()->route('scenario')->with('success', 'Сценарий успішно створен');
     }
     public function edit($id)
     {
@@ -133,10 +132,8 @@ class ScenarioController extends Controller
     }
     public function update(Request $request, $id)
     {
-        // Валидация входящих данных
         $request->validate($this->getValidator());
 
-        // Получаем сценарий по ID
         $scenario = Scenario::findOrFail($id);
 
         $scenarioLogId = $this->update_scanries($scenario->scenario_logs_id,'log',$request->actions,ScenarioLog::class, function($object) use ($request){
@@ -145,8 +142,6 @@ class ScenarioController extends Controller
             function() use ($request){
             return ScenarioLog::create(['format' => $request->log_format]);
         });
-
-
 
         $scenarioDbId = $this->update_scanries($scenario->scenario_dbs_id,'save_db',$request->actions,ScenarioDb::class, function($object) use ($request){
             return $object->update(['login' => $request->db_login,
@@ -167,14 +162,12 @@ class ScenarioController extends Controller
                 ]);
             });
 
-
         $scenarioNotifyId = $this->update_scanries($scenario->scenario_notifies_id,'notify',$request->actions,ScenarioNotify::class, function($object) use ($request){
             return $object->update(['format' => $request->notification_message,'type'=>$request->notification_type]);
         },
             function() use ($request){
                 return  ScenarioNotify::create(['format' => $request->notification_message,'type'=>$request->notification_type]);
             });
-
 
         $scenarioModuleId = $this->update_scanries($scenario->scenario_modules_id,'change_state',$request->actions,ScenarioModule::class, function($object) use ($request){
             return $object->update(['devices_id' => $request->change_module,
@@ -187,7 +180,6 @@ class ScenarioController extends Controller
                 ]);
             });
 
-
         $scenarioApiId =$this->update_scanries($scenario->scenario_apis_id,'send_api',$request->actions,ScenarioApi::class, function($object) use ($request){
             return $object->update(['format' => $request->api_body,
                 'url' => $request->api_url,]);
@@ -199,7 +191,6 @@ class ScenarioController extends Controller
                 ]);
             });
 
-        // Обновляем сценарий с новыми данными
         $scenario->update([
             'devices_id' => $request->devices_id,
             'key' => $request->key,
@@ -211,16 +202,15 @@ class ScenarioController extends Controller
             'scenario_modules_id' => $scenarioModuleId,
         ]);
 
-        return redirect()->route('scenario')->with('success', 'Сценарий успешно обновлён.');
+        return redirect()->route('scenario')->with('success', 'Сценарій успішно оновлен.');
     }
 
     public function delete($id)
     {
 
-
         $scenario = Scenario::findOrFail($id);
         if($scenario->users_id != Auth::id()){
-            return redirect()->route('scenario')->with('error', 'Это не ваш сценарий.');
+            return redirect()->route('scenario')->with('error', 'Це не ваш сценарій!');
         }
         if($scenario->scenario_logs_id != null){
             $scenario->scenarioLog->delete();
@@ -239,12 +229,7 @@ class ScenarioController extends Controller
         }
         $scenario->delete();
 
-
-
-
-
-
-        return redirect()->route('scenario')->with('success', 'Сценарий успешно удалён.');
+        return redirect()->route('scenario')->with('success', 'Сценарій успешно видален.');
     }
 
 }

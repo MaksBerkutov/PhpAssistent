@@ -30,26 +30,21 @@ class WidgetController extends Controller
         ]);
         $validated['is_private'] = !$validated['accesses_key'] == null;
         Widget::create($validated);
-        return redirect()->route('widget')->with('success ', 'Виджет создан');
+        return redirect()->route('widget')->with('success ', 'Віджет створен');
     }
 
     public function delete($id)
     {
-        if(Auth::user()->role!="admin") return  redirect()->route("home")->with("error","Вы не администратор!");
+        if(Auth::user()->role!="admin") return  redirect()->route("home")->with("error","Вы не админістратор!");
         Widget::findOrFail($id)->delete();
-        return redirect()->route('widget')->with('success', 'Виджет успешно удалён.');
+        return redirect()->route('widget')->with('success', 'Віджет успішно видален.');
     }
     public function update(Request $request, $id)
     {
-        return redirect()->route('widget')->with('success', 'Сценарий успешно обновлён.');
-
+        return redirect()->route('widget')->with('success', 'Сценарій успішно оновлен.');
     }
     public function edit($id)
     {
-
-
         return view('Widget.create');
     }
-
-
 }

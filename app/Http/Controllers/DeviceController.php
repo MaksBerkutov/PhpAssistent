@@ -66,7 +66,7 @@ class DeviceController extends Controller
         ]);
         $device = Device::findOrFail($request['id']);
         if($device->user_id!=Auth::id()){
-            return redirect()->route('devices')->with('error', "Вы не имеете доступа к этому модулю!");
+            return redirect()->route('devices')->with('error', "Ви не маєте доступа до цього модуля!");
         }
 
         $path = "public/firmwares/{$device->user_id}/{$device->id}";
@@ -74,7 +74,7 @@ class DeviceController extends Controller
         $fileName = $request->file('firmware')->getClientOriginalName();
         $request->file('firmware')->storeAs($path, $fileName);
         $this->sendFirmwareUpdate($device->url,url( Storage::url("$path/$fileName")));
-        return redirect()->route('devices')->with('success', "Успешно загруженно");
+        return redirect()->route('devices')->with('success', "успішно загруженно");
 
     }
     public function setConfigure(Request $request)
@@ -85,10 +85,10 @@ class DeviceController extends Controller
         ]);
         $device = Device::findOrFail($validated['id']);
         if($device->user_id!=Auth::id()){
-            return redirect()->route('devices')->with('error', "Вы не имеете доступа к этому модулю!");
+            return redirect()->route('devices')->with('error', "Ви не маєте доступа до цього модуля!");
         }
         $responce = DevicesReqest::sendReqest($device->url,env("SET_CFG_COMMAND"),$validated["jsonData"]);
-        return redirect()->route('devices')->with('success', "Успешно обновлён конфиг");
+        return redirect()->route('devices')->with('success', "успішно оновлен конфіг");
     }
     public function getConfigure(Request $request)
     {
@@ -97,12 +97,11 @@ class DeviceController extends Controller
         ]);
         $device = Device::findOrFail($request['id']);
         if($device->user_id!=Auth::id()){
-            return redirect()->route('devices')->with('error', "Вы не имеете доступа к этому модулю!");
+            return redirect()->route('devices')->with('error', "Ви не маєте доступа до цього модуля!");
         }
 
         $id = $request['id'];
         $jsonData = DevicesReqest::sendReqest($device->url,env("GET_CFG_COMMAND"));
-
 
         return view('Devices.config',compact('jsonData','id'));
     }
@@ -117,9 +116,9 @@ class DeviceController extends Controller
         ]);
 
         if ($response->getStatusCode() == 200) {
-            Log::info('Обновление прошивки успешно отправлено на устройство ' . $ip);
+            Log::info('Оновлення прошивки успішно надіслано на пристрій ' . $ip);
         } else {
-            Log::error('Ошибка отправки обновления прошивки на устройство ' . $ip);
+            Log::error('Помилка надсилання оновлення прошивки на пристрій' . $ip);
         }
     }
 

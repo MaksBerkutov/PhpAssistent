@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="mb-4">Виджеты</h1>
+        <h1 class="mb-4">Віджети</h1>
 
         <div class="row">
             @foreach($widgets as $widget)
@@ -13,9 +13,9 @@
                             {{$widget->name}}
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">Имя компонента: {{$widget->widget_name}}</h5>
+                            <h5 class="card-title">Ім'я компонента: {{$widget->widget_name}}</h5>
                             <p class="card-text">Ключ: {{ $widget->accesses_key }}</p>
-                            <h6>Параметры:</h6>
+                            <h6>Параметри:</h6>
                             <div class="row">
                                 @php
                                     $commands = json_decode($widget->input_params,true );
@@ -34,11 +34,11 @@
                         </div>
 
                         <div class="card-footer text-end">
-                            <a href="{{ route('widget.edit', $widget->id) }}" class="btn btn-primary">Редактировать</a>
+                            <a href="{{ route('widget.edit', $widget->id) }}" class="btn btn-primary">Редагувати</a>
                             <form action="{{route('widget.delete', $widget->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Удалить</button>
+                                <button type="submit" class="btn btn-danger">Видалити</button>
                             </form>
                         </div>
                     </div>

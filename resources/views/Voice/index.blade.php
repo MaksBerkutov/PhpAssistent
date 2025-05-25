@@ -14,7 +14,7 @@
             <div class="circle" style="animation-play-state: paused; display: none;"></div>
             <div class="circle" style="animation-play-state: paused; display: none;"></div>
         </div>
-        <div class="status" id="status">Статус: ожидание команды "Асистент"</div>
+        <div class="status" id="status">Статус: очікування команди "Ассистент"</div>
     </div>
 
     <script>
@@ -30,14 +30,14 @@
                     circle.style.animationPlayState = 'running';
                     circle.style.display = 'block';
                 });
-                status.textContent = 'Статус: ожидаю команду...';
+                status.textContent = 'Статус: чекаю на команду...';
             } else {
                 // Остановка анимации
                 circles.forEach(circle => {
                     circle.style.animationPlayState = 'paused';
                     circle.style.display = 'none';
                 });
-                status.textContent = 'Статус: ожидание команды "Асистент"';
+                status.textContent = 'Статус: очікування команди "Ассистент"';
             }
         });
 
@@ -73,7 +73,7 @@
                     break;
                 @endforeach
                 default:
-                    speak('Неизвестная команда');
+                    speak('Невідома команда');
             }
         }
     </script>

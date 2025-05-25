@@ -15,7 +15,7 @@
             <div class="mb-3">
                 <label for="module" class="form-label">Модуль</label>
                 <x-device-choose name="device_id" :devices="$devices"
-                                 label="Выберите модуль"/>
+                                 label="Виберіть модуль"/>
             </div>
             <div class="mb-3">
                 <x-device-cmd-choose name="command" deviceChoseName="device_id"
@@ -61,7 +61,7 @@
             <input type="hidden" id="values" name="values">
             <input type="hidden" name="widget_id" value="{{$widget->id}}">
 
-            <button type="submit" class="btn btn-primary">Добавить виджет</button>
+            <button type="submit" class="btn btn-primary">Додати віджет</button>
         </form>
     </div>
     <script>

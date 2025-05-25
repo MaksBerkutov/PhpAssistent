@@ -1,67 +1,67 @@
 @php
    $menuList = [
       [
-            'name'=>'Главная',
+            'name'=>'Головна',
             'url'=>route('home'),
             'image'=>'home-outline',
             'guard'=>''
        ],[
-            'name'=>'Dashboard',
+            'name'=>'Головна дошка',
             'url'=>route('dashboard'),
             'image'=>'pie-chart-outline',
             'guard'=>''
        ],[
-            'name'=>'Добавить виджет',
+            'name'=>'Додати віджет',
             'url'=>route('dashboard.widget'),
             'image'=>'albums-outline',
             'guard'=>''
        ],[
-            'name'=>'Все виджеты',
+            'name'=>'Усі віджети',
             'url'=>route('widget'),
             'image'=>'apps-outline',
             'guard'=>'admin'
        ],[
-            'name'=>'Создать виджет',
+            'name'=>'Створити віджет',
             'url'=>route('widget.create'),
             'image'=>'add-circle-outline',
             'guard'=>'admin'
        ],[
-            'name'=>'Модули',
+            'name'=>'Модулі',
             'url'=>route('devices'),
             'image'=>'hardware-chip-outline',
             'guard'=>''
        ],[
-            'name'=>'Добавить модуль',
+            'name'=>'Додати модуль',
             'url'=>route('devices.create'),
             'image'=>'add-circle-outline',
             'guard'=>''
        ],[
-            'name'=>'Сценарии',
+            'name'=>'Сценарії',
             'url'=>route('scenario'),
             'image'=>'construct-outline',
             'guard'=>''
        ],[
-            'name'=>'Создать сценарий',
+            'name'=>'Додати сценарій',
             'url'=>route('scenario.create'),
             'image'=>'add-circle-outline',
             'guard'=>''
        ],[
-            'name'=>'Голосвой асисстент',
+            'name'=>'Голосовий помічник',
             'url'=>route('voice'),
             'image'=>'mic-outline',
             'guard'=>''
        ],[
-            'name'=>'Создать команду',
+            'name'=>'Стоврити команду',
             'url'=>route('voice.create'),
             'image'=>'add-circle-outline',
             'guard'=>''
        ],[
-            'name'=>'Настройки',
+            'name'=>'Налаштування',
             'url'=>route('profile'),
             'image'=>'settings-outline',
             'guard'=>''
        ],[
-            'name'=>'Выйти',
+            'name'=>'Вийти',
             'url'=>route('logout'),
             'image'=>'log-out-outline',
             'guard'=>''

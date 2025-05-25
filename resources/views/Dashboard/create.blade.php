@@ -6,10 +6,10 @@
         <form id="accessForm" class="mb-4">
             <div class="form-row align-items-center">
                 <div class="col-auto">
-                    <input id="accessKey" type="text" class="form-control mb-2" placeholder="Введите ключ доступа" required>
+                    <input id="accessKey" type="text" class="form-control mb-2" placeholder="Введіть ключ безпеки" required>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-primary mb-2" onclick="Click()">Найти</button>
+                    <button type="button" class="btn btn-primary mb-2" onclick="Click()">Знайти</button>
                 </div>
             </div>
         </form>
@@ -22,8 +22,8 @@
                             <h5 class="widget-title">{{ $widget->name }}</h5>
                         </div>
                         <div class="card-body">
-                            <p>Ключ доступа: {{ $widget->access_key ?? 'без ключа' }}</p>
-                            <h6>Параметры:</h6>
+                            <p>Ключ доступу: {{ $widget->access_key ?? 'без ключа' }}</p>
+                            <h6>Параметри:</h6>
                             <div class="row">
                                 @php
                                 $commands = json_decode($widget->input_params,true );

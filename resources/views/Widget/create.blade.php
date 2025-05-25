@@ -5,28 +5,28 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                <h2>Форма для заполнения</h2>
+                <h2>Форма для заповнення</h2>
             </div>
             <div class="card-body">
                 <form action="{{route('widget.store')}}" method="post">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Имя</label>
+                        <label for="name">Ім'я</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Пример: Мой виджет" required>
                     </div>
                     <div class="form-group">
-                        <label for="widget_name">Название виджета</label>
+                        <label for="widget_name">Назва віджету</label>
                         <input type="text" class="form-control" id="widget_name" name="widget_name" placeholder="Пример: my-widget" required>
                     </div>
                     <div class="form-group">
-                        <label for="accesses_key">Ключ доступа</label>
+                        <label for="accesses_key">Ключ безпеки</label>
                         <input type="text" class="form-control" id="accesses_key" name="accesses_key" >
                     </div>
-                    <h4>Параметры виджета</h4>
+                    <h4>Параметри віджету</h4>
                     <div id="inputParamsContainer"></div>
                     <input type="hidden" name="input_params" id="input_params">
-                    <button type="button" class="btn btn-primary mb-3" id="addField">Добавить поле</button>
-                    <button type="submit" class="btn btn-success">Отправить</button>
+                    <button type="button" class="btn btn-primary mb-3" id="addField">Додати поле</button>
+                    <button type="submit" class="btn btn-success">Надіслати</button>
                 </form>
             </div>
         </div>
@@ -62,12 +62,12 @@
                 newCard.className = 'card mb-2 input-params-row';
                 newCard.innerHTML = `
                 <div class="card-body d-flex align-items-center">
-                    <input type="text" class="form-control me-2" name="command_on" placeholder="Пример: custom_field" required>
+                    <input type="text" class="form-control me-2" name="command_on" placeholder="Приклад: custom_field" required>
                     <select class="form-control me-2" name="command_value" required>
                         <option value="command">command</option>
                         <option value="text">text</option>
                     </select>
-                    <button type="button" class="btn btn-danger remove-field">Удалить</button>
+                    <button type="button" class="btn btn-danger remove-field">Видалити</button>
                 </div>
             `;
                 inputParamsContainer.appendChild(newCard);

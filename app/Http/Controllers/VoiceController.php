@@ -33,7 +33,7 @@ class VoiceController extends Controller
 
        return response()->json([
            'status' => 'success',
-           'message' => 'Данные успешно обработаны',
+           'message' => 'Данные успішно отримані',
        ]);
    }
    function store(Request $request){
@@ -45,7 +45,7 @@ class VoiceController extends Controller
         ]);
         $data['users_id'] = Auth::id();
         VoiceCommand::create($data);
-        return redirect()->back()->with('success','команда добавленна');
+        return redirect()->back()->with('success','Команда додана');
    }
    function getAllVoicesCommands(){
        $commands = VoiceCommand::where('users_id', Auth::id())->get();

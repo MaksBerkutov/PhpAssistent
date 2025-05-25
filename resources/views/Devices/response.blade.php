@@ -13,14 +13,12 @@
                             <h5 class="card-title">Ключ: <span class="text-primary">{{ $key }}</span></h5>
                             <p class="card-text">
                             @if(is_array($value) || is_object($value))
-                                {{-- Если значение - массив или объект, рекурсивно отображаем его содержимое --}}
                                 <ul>
                                     @foreach($value as $subKey => $subValue)
                                         <li><strong>{{ $subKey }}:</strong> {{ $subValue }}</li>
                                     @endforeach
                                 </ul>
                             @else
-                                {{-- Если это обычное значение, выводим его напрямую --}}
                                 <span class="text-success">{{ $value }}</span>
                                 @endif
                                 </p>

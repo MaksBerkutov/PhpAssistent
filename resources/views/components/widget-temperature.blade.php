@@ -16,7 +16,7 @@
 
             <div class="humidity-section text-center">
                 <ion-icon name="thunderstorm-outline" style="font-size: 50px;"></ion-icon>
-                <h5 class="card-title mt-3">Влажность</h5>
+                <h5 class="card-title mt-3">Вологість</h5>
                 <p class="card-text">{{$humidity}}%</p>
             </div>
         </div>

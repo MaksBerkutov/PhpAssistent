@@ -36,6 +36,6 @@ class DashboardController extends Controller
         ]);
         $validate['user_id'] = Auth::id();
         Dashboard::create($validate);
-        return redirect()->route('dashboard')->with('success ','Виджет добавлен');
+        return redirect()->route('dashboard')->with('success ','Віджет додан');
     }
 }

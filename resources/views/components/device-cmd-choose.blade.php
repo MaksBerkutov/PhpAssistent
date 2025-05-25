@@ -1,7 +1,7 @@
 <div class="mb-3">
     <label for="{{$name}}" class="form-label">{{$label}}</label>
     <select id="{{$name}}" name="{{$name}}" class="form-select @error($name) is-invalid @enderror">
-        <option value="">Выберите команду</option>
+        <option value="">Виберіть команду</option>
     </select>
     @error($name)
     <div class="invalid-feedback">{{ $message }}</div>
@@ -13,7 +13,7 @@
         const module = document.getElementById('{{$deviceChoseName}}');
 
         const commandSelect = document.getElementById('{{$name}}');
-        commandSelect.innerHTML = '<option value="">Выберите команду</option>';
+        commandSelect.innerHTML = '<option value="">Виберіть команду</option>';
 
         const selectedModule = module.options[module.selectedIndex];
         const commands = selectedModule.getAttribute('data-commands');
