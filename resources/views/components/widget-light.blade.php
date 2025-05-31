@@ -37,8 +37,8 @@
         </div>
         <div class="card-body ">
             <ion-icon name="sunny-outline" style="font-size: 50px;"></ion-icon>
-            <h5 class="card-title mt-3">Свет</h5>
-            <p class="card-text">Состояние: <span id="light-status-{{$name}}-{{$id}}">Включен</span></p>
+            <h5 class="card-title mt-3">Cвітло</h5>
+            <p class="card-text">Стан: <span id="light-status-{{$name}}-{{$id}}">Ввімкнено</span></p>
 
 
         </div>
@@ -55,7 +55,7 @@
                 arg:"{{$arg_command_on}}"
 
             })
-            status.innerHTML='Включен'
+            status.innerHTML='Увімкнено'
         }
         else{
             PostSend({
@@ -63,7 +63,7 @@
                 command:"{{$command_off}}",
                 arg:"{{$arg_command_off}}"
             })
-            status.innerHTML='Выключен'
+            status.innerHTML='Вимкнено'
 
         }
     }

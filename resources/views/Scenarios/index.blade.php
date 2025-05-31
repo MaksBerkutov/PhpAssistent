@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                             @else
-                                <p class="card-text">Змінити стан модуля: Не обрано</p>
+                                <p class="card-text">Повідомлення: Не обрано</p>
                             @endif
                             @if($scenario->scenarioModule)
                                 <div class="card bg-light">
