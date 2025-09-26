@@ -19,12 +19,12 @@ Route::get('/', function () {
 });
 
 Route::middleware('IOT')->group(function () {
-    Route::post('/iot/receive', [App\Http\Controllers\IOTController::class,'receive']);
+    Route::post('/iot/receive', [App\Http\Controllers\IOTController::class, 'receive']);
 });
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [App\Http\Controllers\UserController::class,'index'])->name('login');
-    Route::post('/login', [App\Http\Controllers\UserController::class,'login'])->name('authentication');
-    Route::post('/register', [App\Http\Controllers\UserController::class,'create'])->name('register');
+    Route::get('/login', [App\Http\Controllers\UserController::class, 'index'])->name('login');
+    Route::post('/login', [App\Http\Controllers\UserController::class, 'login'])->name('authentication');
+    Route::post('/register', [App\Http\Controllers\UserController::class, 'create'])->name('register');
 });
 Route::middleware('auth')->group(function () {
     //Home
@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/widget', [App\Http\Controllers\WidgetController::class, 'index'])->middleware('checkRole:admin')->name('widget');
     Route::get('/widget/create', [App\Http\Controllers\WidgetController::class, 'create'])->middleware('checkRole:admin')->name('widget.create');
     Route::post('/widget/create', [App\Http\Controllers\WidgetController::class, 'store'])->middleware('checkRole:admin')->name('widget.store');
+    Route::post('/widgets/install', [\App\Http\Controllers\WidgetController::class, 'install'])->name('widgets.install');
     Route::get('/widget/{id}/edit', [App\Http\Controllers\WidgetController::class, 'edit'])->middleware('checkRole:admin')->name('widget.edit');
     Route::delete('/widget/{id}', [App\Http\Controllers\WidgetController::class, 'delete'])->middleware('checkRole:admin')->name('widget.delete');
     Route::put('/widget/{id}', [App\Http\Controllers\WidgetController::class, 'update'])->middleware('checkRole:admin')->name('scenario.update');
@@ -68,11 +69,12 @@ Route::middleware('auth')->group(function () {
     //home
 
 
-    Route::get('/logout', [App\Http\Controllers\UserController::class,'logout'])->name('logout');
-
+    Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 });
 
-Route::get('/email', function (){return view('user.verify-email');})->middleware('auth')->name('verification.notice');
-Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\UserController::class,'verify'])->middleware(['auth','signed'])->name('verification.verify');
-Route::post('/email/verification-notification', [App\Http\Controllers\UserController::class,'send_verify'])->middleware(['auth','throttle:3,1'])->name('verification.send');
+Route::get('/email', function () {
+    return view('user.verify-email');
+})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\UserController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', [App\Http\Controllers\UserController::class, 'send_verify'])->middleware(['auth', 'throttle:3,1'])->name('verification.send');
 //verified auth

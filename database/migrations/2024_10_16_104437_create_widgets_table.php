@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('widget_name');
+            $table->string('version');
             $table->json('input_params');
             $table->string('accesses_key')->nullable();
             $table->boolean('is_private');

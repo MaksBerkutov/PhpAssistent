@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 /**
  * @mixin Builder
  */
@@ -16,6 +17,7 @@ class Widget extends Model
         'widget_name',
         'input_params',
         'is_private',
+        'version',
         'accesses_key'
     ];
     protected $casts = [
