@@ -33,7 +33,7 @@ abstract class BaseAppServiceProvider
 
 
     /**
-     * Рендер интерфейса аппса (для админки)
+     * Рендер интерфейса аппса 
      */
     abstract public function render(array $data = []);
 }

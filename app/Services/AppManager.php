@@ -20,15 +20,20 @@ class AppManager
      */
     public function loadApps(): void
     {
-        $installedApps = Apps::all();
+        try {
+            $installedApps = Apps::all();
 
-        foreach ($installedApps as $appRecord) {
-            $providerClass = $appRecord->entrypoint;
-            try {
-                $this->integrate($providerClass);
-            } catch (\Exception $e) {
+            foreach ($installedApps as $appRecord) {
+                $providerClass = $appRecord->entrypoint;
+                try {
+                    $this->integrate($providerClass);
+                } catch (\Exception $e) {
+                }
             }
+        } catch (\Exception $e) {
+            //TODO Log
         }
+
     }
 
     /**
