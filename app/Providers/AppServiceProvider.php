@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\AES;
+use App\Services\AppManager;
 use App\Services\DevicesReqest;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $appManager = new AppManager();
+
+        // Сохраняем в контейнер, чтобы потом использовать
+        app()->instance(AppManager::class, $appManager);
     }
 }

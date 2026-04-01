@@ -73,6 +73,14 @@ Route::middleware('auth')->group(function () {
     //home
 
 
+    //Apps
+    Route::prefix('apps')->group(function () {
+        Route::get('/', [App\Http\Controllers\AppInstallerController::class, 'index'])->name('apps.index');
+        Route::get('/upload', [App\Http\Controllers\AppInstallerController::class, 'uploadForm'])->name('apps.upload');
+        Route::post('/install', [App\Http\Controllers\AppInstallerController::class, 'install'])->name('apps.install');
+        Route::get('/open/{app}', [App\Http\Controllers\AppInstallerController::class, 'open'])->name('apps.open');
+    });
+
     Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 });
 
