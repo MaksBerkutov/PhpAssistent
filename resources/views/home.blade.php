@@ -103,6 +103,24 @@
             display: grid;
             gap: 8px;
         }
+
+        .card-scroll {
+            max-height: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-scroll .card-body {
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .card-scroll .card-body::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
     </style>
 @endsection
 
@@ -153,7 +171,7 @@
             </article>
         </section>
 
-        <section class="card">
+        <section class="card card-scroll">
             <div class="card-header">
                 <h5 class="mb-0">{{ __('ui.home.checklist_title') }}</h5>
             </div>

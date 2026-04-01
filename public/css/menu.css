@@ -89,7 +89,7 @@ body.app-shell {
         radial-gradient(circle at 92% 14%, var(--bg-highlight-2) 0%, transparent 35%),
         linear-gradient(140deg, #fffefb 0%, var(--bg-base) 100%);
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -302,7 +302,7 @@ a {
     margin: 18px 18px 18px 316px;
     width: calc(100vw - 334px);
     max-width: calc(100vw - 334px);
-    min-height: calc(100vh - 36px);
+    height: calc(100vh - 36px);
     border-radius: var(--radius-xl);
     border: 1px solid var(--line);
     background: var(--surface);
@@ -311,7 +311,7 @@ a {
     padding: 24px clamp(14px, 2vw, 30px) 30px;
     display: flex;
     flex-direction: column;
-    overflow-x: clip;
+    overflow: hidden;
 }
 
 .app-topbar {
@@ -426,7 +426,19 @@ a {
 
 .app-content {
     width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     animation: lift-in 0.45s ease both;
+}
+
+.app-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
 }
 
 #main .container,
@@ -755,7 +767,7 @@ tbody td {
         margin: 92px 10px 10px;
         width: calc(100vw - 20px);
         max-width: calc(100vw - 20px);
-        min-height: calc(100vh - 102px);
+        height: calc(100vh - 102px);
         border-radius: 20px;
         padding: 18px 14px 22px;
     }
