@@ -1,20 +1,19 @@
-
-
 .animation {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 190px;
+    height: 190px;
     margin: 20px auto;
 }
 
 .circle {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #00f, #f0f);
+    background: linear-gradient(135deg, #0ea5e9, #22c55e);
     opacity: 0;
-    animation: pulse 1.5s infinite;
+    box-shadow: 0 0 18px rgba(14, 165, 233, 0.45);
+    animation: pulse 1.7s infinite;
 }
 
 .circle:nth-child(1) {
@@ -24,32 +23,42 @@
 }
 
 .circle:nth-child(2) {
-    left: 30%;
-    bottom: 20%;
-    animation-delay: 0.5s;
+    left: 28%;
+    bottom: 24%;
+    animation-delay: 0.45s;
 }
 
 .circle:nth-child(3) {
     left: 70%;
     bottom: 30%;
-    animation-delay: 1s;
+    animation-delay: 0.9s;
 }
 
 @keyframes pulse {
     0% {
-        transform: scale(1);
+        transform: scale(0.85);
         opacity: 0;
     }
-    50% {
-        transform: scale(1.5);
+
+    45% {
+        transform: scale(1.35);
         opacity: 1;
     }
+
     100% {
-        transform: scale(1);
+        transform: scale(0.9);
         opacity: 0;
     }
 }
 
 .status {
-    margin-top: 20px;
+    margin: 16px auto 0;
+    max-width: 560px;
+    text-align: center;
+    color: #334155;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(148, 163, 184, 0.32);
+    border-radius: 12px;
+    padding: 12px 14px;
 }
