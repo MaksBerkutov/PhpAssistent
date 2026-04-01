@@ -1,12 +1,52 @@
+:root {
+    --auth-ink: #1f272d;
+    --auth-muted: #4e5d69;
+    --auth-surface: rgba(255, 255, 255, 0.92);
+    --auth-line: rgba(31, 39, 45, 0.13);
+    --auth-pill-bg: #eff4f6;
+    --auth-input-border: rgba(99, 114, 125, 0.35);
+    --auth-input-bg: #ffffff;
+    --auth-input-text: #1f272d;
+    --auth-input-placeholder: #97a5af;
+    --auth-focus: #1f7a72;
+    --auth-focus-shadow: rgba(31, 122, 114, 0.16);
+    --auth-button-bg: linear-gradient(140deg, #1f7a72 0%, #18625c 100%);
+    --auth-button-shadow: 0 12px 24px rgba(31, 122, 114, 0.24);
+}
+
+body[data-theme="dark"] {
+    --auth-ink: #dbe7f1;
+    --auth-muted: #a4b8c7;
+    --auth-surface: rgba(21, 28, 34, 0.94);
+    --auth-line: rgba(139, 156, 170, 0.26);
+    --auth-pill-bg: #1d2730;
+    --auth-input-border: rgba(139, 156, 170, 0.3);
+    --auth-input-bg: #1b232b;
+    --auth-input-text: #e1edf7;
+    --auth-input-placeholder: #8ea2b2;
+    --auth-focus: #3aa89d;
+    --auth-focus-shadow: rgba(58, 168, 157, 0.22);
+    --auth-button-bg: linear-gradient(140deg, #d8642c 0%, #b84b1a 100%);
+    --auth-button-shadow: 0 12px 24px rgba(184, 75, 26, 0.28);
+    color-scheme: dark;
+}
+
 body {
     margin: 0;
     min-height: 100vh;
     font-family: "Sora", "Manrope", "Segoe UI", sans-serif;
-    color: #1f272d;
+    color: var(--auth-ink);
     background:
         radial-gradient(circle at 12% 16%, rgba(216, 100, 44, 0.22), transparent 34%),
         radial-gradient(circle at 86% 14%, rgba(31, 122, 114, 0.2), transparent 35%),
         linear-gradient(145deg, #fffefb 0%, #f4f1ec 100%);
+}
+
+body[data-theme="dark"] {
+    background:
+        radial-gradient(circle at 12% 16%, rgba(216, 100, 44, 0.2), transparent 34%),
+        radial-gradient(circle at 86% 14%, rgba(31, 122, 114, 0.18), transparent 35%),
+        linear-gradient(145deg, #0f1316 0%, #171d23 100%);
 }
 
 .auth-wrap {
@@ -27,7 +67,7 @@ body {
 
 .auth-intro {
     border-radius: 24px;
-    border: 1px solid rgba(31, 39, 45, 0.12);
+    border: 1px solid var(--auth-line);
     background:
         linear-gradient(165deg, rgba(31, 122, 114, 0.9), rgba(31, 122, 114, 0.7));
     color: #f2fcfa;
@@ -86,16 +126,16 @@ body {
 
 .auth-card {
     border-radius: 24px;
-    border: 1px solid rgba(31, 39, 45, 0.13);
+    border: 1px solid var(--auth-line);
     box-shadow: 0 20px 42px rgba(31, 39, 45, 0.1);
-    background: rgba(255, 255, 255, 0.92);
+    background: var(--auth-surface);
     backdrop-filter: blur(8px);
     width: 100%;
     animation: auth-up 0.5s ease both;
 }
 
 .nav-pills {
-    background: #eff4f6;
+    background: var(--auth-pill-bg);
     border-radius: 999px;
     padding: 6px;
 }
@@ -112,6 +152,10 @@ body {
     transition: all 0.22s ease;
 }
 
+body[data-theme="dark"] .nav-pills .nav-link {
+    color: #a9becd;
+}
+
 .nav-pills .nav-link.active {
     background: linear-gradient(135deg, #d8642c 0%, #bb4e1d 100%);
     color: #fff;
@@ -121,26 +165,28 @@ body {
 .form-label {
     font-size: 0.8rem;
     font-weight: 700;
-    color: #4e5d69;
+    color: var(--auth-muted);
 }
 
 .form-control {
     border-radius: 11px;
-    border: 1px solid rgba(99, 114, 125, 0.35);
-    background: #ffffff;
-    color: #1f272d;
+    border: 1px solid var(--auth-input-border);
+    background: var(--auth-input-bg);
+    color: var(--auth-input-text);
     padding: 0.72rem 0.9rem;
     margin-bottom: 14px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-control::placeholder {
-    color: #97a5af;
+    color: var(--auth-input-placeholder);
 }
 
 .form-control:focus {
-    border-color: #1f7a72;
-    box-shadow: 0 0 0 4px rgba(31, 122, 114, 0.16);
+    border-color: var(--auth-focus);
+    box-shadow: 0 0 0 4px var(--auth-focus-shadow);
+    background: var(--auth-input-bg);
+    color: var(--auth-input-text);
 }
 
 .btn-dark {
@@ -151,8 +197,8 @@ body {
     font-weight: 700;
     letter-spacing: 0.01em;
     color: #ffffff;
-    background: linear-gradient(140deg, #1f7a72 0%, #18625c 100%);
-    box-shadow: 0 12px 24px rgba(31, 122, 114, 0.24);
+    background: var(--auth-button-bg);
+    box-shadow: var(--auth-button-shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -161,6 +207,11 @@ body {
     transform: translateY(-1px);
     box-shadow: 0 16px 26px rgba(31, 122, 114, 0.28);
     color: #ffffff;
+}
+
+body[data-theme="dark"] .btn-dark:hover,
+body[data-theme="dark"] .btn-dark:focus {
+    box-shadow: 0 16px 26px rgba(184, 75, 26, 0.34);
 }
 
 .invalid-feedback {

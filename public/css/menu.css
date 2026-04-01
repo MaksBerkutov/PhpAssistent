@@ -3,17 +3,25 @@
     --bg-highlight: #fdebdc;
     --bg-highlight-2: #d8efe8;
     --surface: rgba(255, 255, 255, 0.82);
+    --surface-nav: rgba(255, 255, 255, 0.92);
     --surface-strong: #ffffff;
     --surface-muted: #f7f8f9;
     --line: rgba(31, 39, 45, 0.12);
     --ink: #1f272d;
     --ink-soft: #63727d;
+    --ink-body: #44525b;
     --accent: #d8642c;
     --accent-strong: #bb4e1d;
     --accent-contrast: #ffffff;
     --accent-soft: rgba(216, 100, 44, 0.14);
     --secondary: #1f7a72;
     --secondary-soft: rgba(31, 122, 114, 0.14);
+    --icon-bg: rgba(31, 39, 45, 0.05);
+    --pref-bg: rgba(255, 255, 255, 0.9);
+    --pref-border: rgba(31, 39, 45, 0.2);
+    --pref-text: #596a76;
+    --pref-active-bg: #1f7a72;
+    --pref-active-text: #f4fffd;
     --danger: #c83e47;
     --shadow-soft: 0 20px 50px rgba(31, 39, 45, 0.08);
     --shadow-card: 0 16px 36px rgba(31, 39, 45, 0.08);
@@ -23,6 +31,42 @@
     --radius-md: 14px;
     --radius-sm: 10px;
     --transition: 0.22s ease;
+}
+
+body[data-theme="dark"] {
+    --bg-base: #0f1316;
+    --bg-highlight: rgba(216, 100, 44, 0.25);
+    --bg-highlight-2: rgba(31, 122, 114, 0.26);
+    --surface: rgba(19, 24, 29, 0.9);
+    --surface-nav: rgba(17, 22, 27, 0.94);
+    --surface-strong: #1b232b;
+    --surface-muted: #202a33;
+    --line: rgba(139, 156, 170, 0.24);
+    --ink: #dbe7f1;
+    --ink-soft: #97acbc;
+    --ink-body: #bfd0de;
+    --icon-bg: rgba(155, 175, 192, 0.14);
+    --pref-bg: rgba(29, 38, 47, 0.92);
+    --pref-border: rgba(139, 156, 170, 0.34);
+    --pref-text: #c3d4e2;
+    --pref-active-bg: #d8642c;
+    --pref-active-text: #fff7f2;
+    --danger: #db5d67;
+    --shadow-soft: 0 24px 56px rgba(0, 0, 0, 0.42);
+    --shadow-card: 0 18px 38px rgba(0, 0, 0, 0.36);
+    --shadow-hover: 0 26px 46px rgba(216, 100, 44, 0.22);
+    color-scheme: dark;
+    --bs-body-bg: #0f1316;
+    --bs-body-color: #dbe7f1;
+    --bs-emphasis-color: #eef6fd;
+    --bs-secondary-color: #9fb4c4;
+    --bs-tertiary-bg: #202a33;
+    --bs-border-color: rgba(139, 156, 170, 0.28);
+    --bs-card-bg: #1b232b;
+    --bs-card-cap-bg: #202a33;
+    --bs-card-color: #dbe7f1;
+    --bs-light-rgb: 32, 42, 51;
+    --bs-dark-rgb: 219, 231, 241;
 }
 
 *,
@@ -45,7 +89,7 @@ body.app-shell {
         radial-gradient(circle at 92% 14%, var(--bg-highlight-2) 0%, transparent 35%),
         linear-gradient(140deg, #fffefb 0%, var(--bg-base) 100%);
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -105,7 +149,7 @@ a {
     width: 280px;
     border-radius: 24px;
     border: 1px solid var(--line);
-    background: rgba(255, 255, 255, 0.92);
+    background: var(--surface-nav);
     box-shadow: var(--shadow-soft);
     padding: 16px 14px;
     display: flex;
@@ -235,7 +279,7 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(31, 39, 45, 0.05);
+    background: var(--icon-bg);
     transition: background var(--transition);
 }
 
@@ -256,7 +300,9 @@ a {
 
 #main {
     margin: 18px 18px 18px 316px;
-    min-height: calc(100vh - 36px);
+    width: calc(100vw - 334px);
+    max-width: calc(100vw - 334px);
+    height: calc(100vh - 36px);
     border-radius: var(--radius-xl);
     border: 1px solid var(--line);
     background: var(--surface);
@@ -265,12 +311,14 @@ a {
     padding: 24px clamp(14px, 2vw, 30px) 30px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .app-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 14px;
     margin-bottom: 18px;
     animation: lift-in 0.4s ease both;
@@ -297,6 +345,66 @@ a {
     font-weight: 700;
 }
 
+.app-topbar-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 100%;
+}
+
+.app-pref-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 42px;
+    border: 1px solid var(--line);
+    background: var(--surface-strong);
+    border-radius: 999px;
+    padding: 5px 8px;
+    max-width: 100%;
+}
+
+.app-pref-label {
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-left: 2px;
+}
+
+.pref-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 0 9px;
+    border-radius: 999px;
+    border: 1px solid var(--pref-border);
+    background: var(--pref-bg);
+    color: var(--pref-text);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: all var(--transition);
+}
+
+.pref-chip:hover,
+.pref-chip:focus {
+    transform: translateY(-1px);
+    color: var(--pref-text);
+}
+
+.pref-chip.is-active {
+    border-color: transparent;
+    background: var(--pref-active-bg);
+    color: var(--pref-active-text);
+    box-shadow: 0 8px 16px rgba(31, 39, 45, 0.2);
+}
+
 .app-topbar-user {
     display: inline-flex;
     align-items: center;
@@ -318,7 +426,19 @@ a {
 
 .app-content {
     width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     animation: lift-in 0.45s ease both;
+}
+
+.app-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
 }
 
 #main .container,
@@ -396,7 +516,7 @@ small,
 li,
 td,
 th {
-    color: #44525b;
+    color: var(--ink-body);
 }
 
 .form-label {
@@ -554,7 +674,8 @@ tbody td {
     .brand-copy,
     .sidebar-user span,
     .link-text,
-    .app-topbar-user span {
+    .app-topbar-user span,
+    .app-pref-label {
         display: none;
     }
 
@@ -563,6 +684,10 @@ tbody td {
         justify-content: center;
         padding-left: 0;
         padding-right: 0;
+    }
+
+    .app-pref-switcher {
+        padding: 5px;
     }
 
     .navbar-item-inner {
@@ -576,6 +701,8 @@ tbody td {
 
     #main {
         margin-left: 126px;
+        width: calc(100vw - 144px);
+        max-width: calc(100vw - 144px);
     }
 }
 
@@ -638,7 +765,9 @@ tbody td {
 
     #main {
         margin: 92px 10px 10px;
-        min-height: calc(100vh - 102px);
+        width: calc(100vw - 20px);
+        max-width: calc(100vw - 20px);
+        height: calc(100vh - 102px);
         border-radius: 20px;
         padding: 18px 14px 22px;
     }
@@ -651,6 +780,11 @@ tbody td {
 
     .app-topbar-user {
         display: none;
+    }
+
+    .app-topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
     }
 }
 

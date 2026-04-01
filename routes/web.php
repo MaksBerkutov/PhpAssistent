@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PreferenceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/preferences/locale/{locale}', [PreferenceController::class, 'setLocale'])->name('preferences.locale');
+Route::get('/preferences/theme/{theme}', [PreferenceController::class, 'setTheme'])->name('preferences.theme');
 
 Route::middleware('IOT')->group(function () {
     Route::post('/iot/receive', [App\Http\Controllers\IOTController::class, 'receive']);
@@ -68,6 +72,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/voice/command', [App\Http\Controllers\VoiceController::class, 'command'])->name('voice.command');
     //home
 
+
+    //Apps
+    Route::prefix('apps')->group(function () {
+        Route::get('/', [App\Http\Controllers\AppInstallerController::class, 'index'])->name('apps.index');
+        Route::get('/upload', [App\Http\Controllers\AppInstallerController::class, 'uploadForm'])->name('apps.upload');
+        Route::post('/install', [App\Http\Controllers\AppInstallerController::class, 'install'])->name('apps.install');
+        Route::get('/{app}/update', [App\Http\Controllers\AppInstallerController::class, 'updateForm'])->name('apps.update.form');
+        Route::post('/{app}/update', [App\Http\Controllers\AppInstallerController::class, 'update'])->name('apps.update');
+        Route::delete('/{app}', [App\Http\Controllers\AppInstallerController::class, 'destroy'])->name('apps.destroy');
+        Route::get('/open/{app}', [App\Http\Controllers\AppInstallerController::class, 'open'])->name('apps.open');
+    });
 
     Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 });

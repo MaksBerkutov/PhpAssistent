@@ -1,0 +1,7 @@
+{
+  "name": "Telegram Control",
+  "slug": "telegramcontrol",
+  "version": "1.0.0",
+  "description": "Telegram bot integration for PhpAssistant with commands, webhook management and quick monitoring.",
+  "entrypoint": "Apps\\Telegramcontrol\\ServiceProvider"
+}

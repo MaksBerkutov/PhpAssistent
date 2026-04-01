@@ -1,0 +1,7 @@
+{
+  "name": "Status Beacon",
+  "slug": "statusbeacon",
+  "version": "1.0.0",
+  "description": "Demo app: shows live workspace stats and a ping endpoint to illustrate app routes.",
+  "entrypoint": "Apps\\Statusbeacon\\ServiceProvider"
+}
