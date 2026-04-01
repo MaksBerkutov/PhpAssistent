@@ -1,0 +1,106 @@
+<?php
+
+return [
+    'layout' => [
+        'brand' => 'PhpAssistant',
+        'control_hub' => 'Control Hub',
+        'workspace' => 'Smart Home Workspace',
+    ],
+
+    'common' => [
+        'language' => 'Language',
+        'theme' => 'Theme',
+        'light' => 'Light',
+        'dark' => 'Dark',
+        'login' => 'Login',
+        'signup' => 'Sign up',
+        'create_account' => 'Create account',
+        'open_workspace' => 'Open Workspace',
+        'start_now' => 'Start Now',
+        'go_to_dashboard' => 'Go to Dashboard',
+    ],
+
+    'nav' => [
+        'home' => 'Home',
+        'dashboard' => 'Dashboard',
+        'add_widget' => 'Add Widget',
+        'widgets' => 'All Widgets',
+        'create_widget' => 'Create Widget',
+        'devices' => 'Devices',
+        'add_device' => 'Add Device',
+        'scenarios' => 'Scenarios',
+        'add_scenario' => 'Add Scenario',
+        'voice_assistant' => 'Voice Assistant',
+        'create_voice_command' => 'Create Voice Command',
+        'settings' => 'Settings',
+        'logout' => 'Logout',
+    ],
+
+    'home' => [
+        'page_title' => 'Home',
+        'kicker' => 'Workspace Overview',
+        'title' => 'Welcome back, :name!',
+        'subtitle' => 'This is your control center. From here you can manage devices, build scenarios, configure widgets, and trigger voice commands.',
+        'role' => 'Role: :role',
+        'email' => 'Email: :status',
+        'email_verified' => 'Verified',
+        'email_not_verified' => 'Not verified',
+
+        'quick_actions' => 'Quick Actions',
+        'open_dashboard' => 'Open Dashboard',
+        'devices' => 'Devices',
+        'scenarios' => 'Scenarios',
+        'voice_assistant' => 'Voice Assistant',
+
+        'account' => 'Account',
+        'status' => 'Status',
+        'default_entry' => 'Default Entry',
+        'session' => 'Session',
+        'default_dashboard' => 'Dashboard',
+        'status_active' => 'Active',
+        'status_verification' => 'Verification required',
+
+        'checklist_title' => 'Getting Started Checklist',
+        'checklist_1' => 'Add your first device in the Devices section.',
+        'checklist_2' => 'Create a widget to visualize sensor data.',
+        'checklist_3' => 'Build at least one scenario automation.',
+        'checklist_4' => 'Configure a voice command for daily use.',
+    ],
+
+    'welcome' => [
+        'page_title' => 'PhpAssistant',
+        'kicker' => 'Smart Home Platform',
+        'title' => 'Manage devices, scenarios, and voice commands in one place',
+        'description' => 'PhpAssistant is your unified control center for IoT workflows. Build dashboards, automate actions, and keep your smart home setup simple and fast.',
+        'point_1' => 'Device control and status monitoring',
+        'point_2' => 'Scenario automation for daily routines',
+        'point_3' => 'Widget dashboard for quick overview',
+        'point_4' => 'Voice command integrations',
+
+        'quick_start' => 'Quick Start',
+        'step_1' => '1. Sign in to your account.',
+        'step_2' => '2. Add your first device and verify connectivity.',
+        'step_3' => '3. Create scenarios for automatic actions.',
+        'step_4' => '4. Build widgets for your dashboard view.',
+        'step_5' => '5. Configure voice commands if needed.',
+
+        'features_widgets_title' => 'Dashboard Widgets',
+        'features_widgets_text' => 'Visual blocks for temperature, light controls, and any custom data from your modules.',
+        'features_scenario_title' => 'Scenario Builder',
+        'features_scenario_text' => 'Create event chains and actions to automate routine tasks without manual control.',
+        'features_roles_title' => 'Role-based Access',
+        'features_roles_text' => 'Keep administration features separated while giving users a clean operational workspace.',
+        'features_voice_title' => 'Voice Support',
+        'features_voice_text' => 'Bind phrases to commands and trigger device operations through voice interactions.',
+    ],
+
+    'auth' => [
+        'page_title' => 'Authentication',
+        'platform_kicker' => 'Smart Home Platform',
+        'title' => 'PhpAssistant',
+        'description' => 'Manage modules, scenarios, and voice commands in one clean interface.',
+        'point_1' => 'Unified device panel',
+        'point_2' => 'Scenario automation',
+        'point_3' => 'Fast mobile access',
+    ],
+];

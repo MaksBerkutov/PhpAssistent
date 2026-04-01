@@ -1,72 +1,80 @@
 @php
    $menuList = [
       [
-            'name'=>'Головна',
+            'label'=>'ui.nav.home',
             'url'=>route('home'),
             'image'=>'home-outline',
             'guard'=>''
        ],[
-            'name'=>'Головна дошка',
+            'label'=>'ui.nav.dashboard',
             'url'=>route('dashboard'),
             'image'=>'pie-chart-outline',
             'guard'=>''
        ],[
-            'name'=>'Додати віджет',
+            'label'=>'ui.nav.add_widget',
             'url'=>route('dashboard.widget'),
             'image'=>'albums-outline',
             'guard'=>''
        ],[
-            'name'=>'Усі віджети',
+            'label'=>'ui.nav.widgets',
             'url'=>route('widget'),
             'image'=>'apps-outline',
             'guard'=>'admin'
        ],[
-            'name'=>'Створити віджет',
+            'label'=>'ui.nav.create_widget',
             'url'=>route('widget.create'),
             'image'=>'add-circle-outline',
             'guard'=>'admin'
        ],[
-            'name'=>'Модулі',
+            'label'=>'ui.nav.devices',
             'url'=>route('devices'),
             'image'=>'hardware-chip-outline',
             'guard'=>''
        ],[
-            'name'=>'Додати модуль',
+            'label'=>'ui.nav.add_device',
             'url'=>route('devices.create'),
             'image'=>'add-circle-outline',
             'guard'=>''
        ],[
-            'name'=>'Сценарії',
+            'label'=>'ui.nav.scenarios',
             'url'=>route('scenario'),
             'image'=>'construct-outline',
             'guard'=>''
        ],[
-            'name'=>'Додати сценарій',
+            'label'=>'ui.nav.add_scenario',
             'url'=>route('scenario.create'),
             'image'=>'add-circle-outline',
             'guard'=>''
        ],[
-            'name'=>'Голосовий помічник',
+            'label'=>'ui.nav.voice_assistant',
             'url'=>route('voice'),
             'image'=>'mic-outline',
             'guard'=>''
        ],[
-            'name'=>'Стоврити команду',
+            'label'=>'ui.nav.create_voice_command',
             'url'=>route('voice.create'),
             'image'=>'add-circle-outline',
             'guard'=>''
        ],[
-            'name'=>'Налаштування',
+            'label'=>'ui.nav.settings',
             'url'=>route('profile'),
             'image'=>'settings-outline',
             'guard'=>''
        ],[
-            'name'=>'Вийти',
+            'label'=>'ui.nav.logout',
             'url'=>route('logout'),
             'image'=>'log-out-outline',
             'guard'=>''
        ]
 ];
+
+$currentTheme = session('theme', 'light');
+if (!in_array($currentTheme, ['light', 'dark'], true)) {
+    $currentTheme = 'light';
+}
+
+$currentLocale = app()->getLocale();
+
 function MenuGuard(string $GuardString):bool{
     if(empty($GuardString)) return true;
     $guards = explode('|',$GuardString);
@@ -90,7 +98,7 @@ function MenuGuard(string $GuardString):bool{
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}?v={{ filemtime(public_path('css/menu.css')) }}">
 
-    <title>@yield('title',ucwords(Route::currentRouteName()))</title>
+    <title>@yield('title', __('ui.layout.workspace'))</title>
     @yield('styles',"")
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -98,14 +106,14 @@ function MenuGuard(string $GuardString):bool{
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body class="app-shell">
+<body class="app-shell" data-theme="{{ $currentTheme }}">
 
 <nav id="navbar" aria-label="Main navigation">
     <div class="sidebar-brand">
         <div class="brand-mark">PA</div>
         <div class="brand-copy">
-            <strong>PhpAssistant</strong>
-            <small>Control Hub</small>
+            <strong>{{ __('ui.layout.brand') }}</strong>
+            <small>{{ __('ui.layout.control_hub') }}</small>
         </div>
     </div>
 
@@ -117,7 +125,7 @@ function MenuGuard(string $GuardString):bool{
     <ul class="navbar-items flexbox-col">
         @foreach($menuList as $menu)
             @if(MenuGuard($menu['guard']))
-                <x-menu-item name="{{$menu['name']}}" href="{{$menu['url']}}" icon="{{$menu['image']}}"></x-menu-item>
+                <x-menu-item name="{{ __($menu['label']) }}" href="{{$menu['url']}}" icon="{{$menu['image']}}"></x-menu-item>
             @endif
         @endforeach
     </ul>
@@ -126,12 +134,27 @@ function MenuGuard(string $GuardString):bool{
 <main id="main" class="container-fluid">
     <header class="app-topbar">
         <div class="app-topbar-title-wrap">
-            <p class="app-kicker">Smart Home Workspace</p>
-            <h1 class="app-title">@yield('title',ucwords(Route::currentRouteName()))</h1>
+            <p class="app-kicker">{{ __('ui.layout.workspace') }}</p>
+            <h1 class="app-title">@yield('title', __('ui.layout.workspace'))</h1>
         </div>
-        <div class="app-topbar-user">
-            <ion-icon name="sparkles-outline"></ion-icon>
-            <span>{{ Auth::user()->name }}</span>
+
+        <div class="app-topbar-actions">
+            <div class="app-pref-switcher">
+                <span class="app-pref-label">{{ __('ui.common.language') }}</span>
+                <a href="{{ route('preferences.locale', 'ru') }}" class="pref-chip @if($currentLocale === 'ru') is-active @endif">RU</a>
+                <a href="{{ route('preferences.locale', 'en') }}" class="pref-chip @if($currentLocale === 'en') is-active @endif">EN</a>
+            </div>
+
+            <div class="app-pref-switcher">
+                <span class="app-pref-label">{{ __('ui.common.theme') }}</span>
+                <a href="{{ route('preferences.theme', 'light') }}" class="pref-chip @if($currentTheme === 'light') is-active @endif">{{ __('ui.common.light') }}</a>
+                <a href="{{ route('preferences.theme', 'dark') }}" class="pref-chip @if($currentTheme === 'dark') is-active @endif">{{ __('ui.common.dark') }}</a>
+            </div>
+
+            <div class="app-topbar-user">
+                <ion-icon name="sparkles-outline"></ion-icon>
+                <span>{{ Auth::user()->name }}</span>
+            </div>
         </div>
     </header>
 

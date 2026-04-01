@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Authentication')
+@section('title', __('ui.auth.page_title'))
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/login.css') }}?v={{ filemtime(public_path('css/login.css')) }}">
     <script src="{{ asset('js/login.js') }}?v={{ filemtime(public_path('js/login.js')) }}"></script>
@@ -8,25 +8,23 @@
 <div class="auth-wrap">
     <div class="auth-shell">
         <aside class="auth-intro">
-            <p class="auth-kicker">Smart Home Platform</p>
-            <h1 class="auth-title">PhpAssistant</h1>
-            <p class="auth-description">
-                Управляйте модулями, сценариями и голосовыми командами в одном аккуратном интерфейсе.
-            </p>
+            <p class="auth-kicker">{{ __('ui.auth.platform_kicker') }}</p>
+            <h1 class="auth-title">{{ __('ui.auth.title') }}</h1>
+            <p class="auth-description">{{ __('ui.auth.description') }}</p>
             <div class="auth-points">
-                <span>Единая панель устройств</span>
-                <span>Автоматизация сценариев</span>
-                <span>Быстрый доступ с телефона</span>
+                <span>{{ __('ui.auth.point_1') }}</span>
+                <span>{{ __('ui.auth.point_2') }}</span>
+                <span>{{ __('ui.auth.point_3') }}</span>
             </div>
         </aside>
 
         <div class="card auth-card p-4 p-lg-5">
             <ul class="nav nav-pills mb-4 d-flex justify-content-center" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active mx-1" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Login</a>
+                    <a class="nav-link active mx-1" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">{{ __('ui.common.login') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mx-1" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Signup</a>
+                    <a class="nav-link mx-1" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">{{ __('ui.common.signup') }}</a>
                 </li>
             </ul>
 
@@ -37,7 +35,7 @@
                         <div class="form">
                             <x-default-form-input type="text" name="email"/>
                             <x-default-form-input type="password" name="password"/>
-                            <button class="btn btn-dark w-100">Login</button>
+                            <button class="btn btn-dark w-100">{{ __('ui.common.login') }}</button>
                         </div>
                     </form>
                 </div>
@@ -50,7 +48,7 @@
                             <x-default-form-input type="text" name="email"/>
                             <x-default-form-input type="password" name="password"/>
                             <x-default-form-input type="password" name="password_confirmation" placeholder="Password confirmation"/>
-                            <button class="btn btn-dark w-100">Signup</button>
+                            <button class="btn btn-dark w-100">{{ __('ui.common.signup') }}</button>
                         </div>
                     </form>
                 </div>

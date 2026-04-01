@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PreferenceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/preferences/locale/{locale}', [PreferenceController::class, 'setLocale'])->name('preferences.locale');
+Route::get('/preferences/theme/{theme}', [PreferenceController::class, 'setTheme'])->name('preferences.theme');
 
 Route::middleware('IOT')->group(function () {
     Route::post('/iot/receive', [App\Http\Controllers\IOTController::class, 'receive']);
