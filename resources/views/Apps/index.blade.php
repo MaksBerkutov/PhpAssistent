@@ -13,7 +13,7 @@
         }
 
         .apps-subtitle {
-            margin: 8px 0 0;
+            margin: 0;
             color: var(--ink-body);
             max-width: 72ch;
         }
@@ -63,7 +63,6 @@
 @section('content')
     <section class="apps-header">
         <div>
-            <h2 class="mb-0">{{ __('ui.apps.title') }}</h2>
             <p class="apps-subtitle">{{ __('ui.apps.subtitle') }}</p>
         </div>
         <a href="{{ route('apps.upload') }}" class="btn btn-primary">{{ __('ui.apps.install_new') }}</a>

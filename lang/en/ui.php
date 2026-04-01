@@ -48,6 +48,8 @@ return [
         'archive_label' => 'Application ZIP archive',
         'install' => 'Install',
         'install_help' => 'Archive should include a valid manifest and source files.',
+        'file_not_selected' => 'No file selected',
+        'file_hint' => 'Supported format: .zip',
         'version' => 'Version',
         'no_description' => 'No description provided.',
         'empty' => 'No applications installed yet.',
