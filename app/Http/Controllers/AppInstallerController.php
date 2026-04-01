@@ -147,17 +147,17 @@ class AppInstallerController extends Controller
             }
 
             $destDir = base_path('app/Apps/' . $safeSlug);
-            File::makeDirectory($destDir, 0755, true);
+            $this->ensureDirectory($destDir);
             File::copyDirectory($srcDir, $destDir);
 
             $viewsSrc = $appRootDir . '/Views';
             if (File::exists($viewsSrc)) {
                 $viewsDestUpper = resource_path('views/Apps/' . $safeSlug);
-                File::makeDirectory($viewsDestUpper, 0755, true);
+                $this->ensureDirectory($viewsDestUpper);
                 File::copyDirectory($viewsSrc, $viewsDestUpper);
 
                 $viewsDestLower = resource_path('views/apps/' . $safeSlug);
-                File::makeDirectory($viewsDestLower, 0755, true);
+                $this->ensureDirectory($viewsDestLower);
                 File::copyDirectory($viewsSrc, $viewsDestLower);
             }
 
@@ -211,5 +211,18 @@ class AppInstallerController extends Controller
         }
 
         return null;
+    }
+
+    protected function ensureDirectory(string $path): void
+    {
+        if (File::isDirectory($path)) {
+            return;
+        }
+
+        if (File::exists($path) && !File::isDirectory($path)) {
+            File::delete($path);
+        }
+
+        File::makeDirectory($path, 0755, true);
     }
 }

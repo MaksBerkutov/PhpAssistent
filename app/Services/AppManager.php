@@ -11,9 +11,11 @@ class AppManager
     protected array $appMenuItems = [];
     protected array $menuItemSignatures = [];
     protected array $loadedProviders = [];
+    protected static bool $appsAutoloaderRegistered = false;
 
     public function __construct()
     {
+        $this->registerAppsAutoloader();
         $this->loadApps();
     }
 
@@ -94,6 +96,8 @@ class AppManager
 
     protected function ensureProviderClassLoaded(string $providerClass): void
     {
+        $this->registerAppsAutoloader();
+
         if (class_exists($providerClass)) {
             return;
         }
@@ -114,6 +118,29 @@ class AppManager
         if (is_file($filePath)) {
             require_once $filePath;
         }
+    }
+
+    protected function registerAppsAutoloader(): void
+    {
+        if (self::$appsAutoloaderRegistered) {
+            return;
+        }
+
+        spl_autoload_register(function (string $class): void {
+            $prefix = 'Apps\\';
+            if (!str_starts_with($class, $prefix)) {
+                return;
+            }
+
+            $relative = substr($class, strlen($prefix));
+            $filePath = base_path('app/Apps/' . str_replace('\\', '/', $relative) . '.php');
+
+            if (is_file($filePath)) {
+                require_once $filePath;
+            }
+        });
+
+        self::$appsAutoloaderRegistered = true;
     }
 
     protected function collectProviderMenuItems(\Apps\BaseAppServiceProvider $provider): void
