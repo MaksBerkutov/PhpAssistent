@@ -56,6 +56,17 @@ body[data-theme="dark"] {
     --shadow-card: 0 18px 38px rgba(0, 0, 0, 0.36);
     --shadow-hover: 0 26px 46px rgba(216, 100, 44, 0.22);
     color-scheme: dark;
+    --bs-body-bg: #0f1316;
+    --bs-body-color: #dbe7f1;
+    --bs-emphasis-color: #eef6fd;
+    --bs-secondary-color: #9fb4c4;
+    --bs-tertiary-bg: #202a33;
+    --bs-border-color: rgba(139, 156, 170, 0.28);
+    --bs-card-bg: #1b232b;
+    --bs-card-cap-bg: #202a33;
+    --bs-card-color: #dbe7f1;
+    --bs-light-rgb: 32, 42, 51;
+    --bs-dark-rgb: 219, 231, 241;
 }
 
 *,
