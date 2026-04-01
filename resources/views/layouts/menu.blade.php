@@ -92,6 +92,13 @@ $menuList = [
     ],
 ];
 
+$appMenuList = [];
+try {
+    $appMenuList = app(\App\Services\AppManager::class)->getMenuItems();
+} catch (\Throwable $e) {
+    $appMenuList = [];
+}
+
 $currentTheme = session('theme', 'light');
 if (!in_array($currentTheme, ['light', 'dark'], true)) {
     $currentTheme = 'light';
@@ -158,6 +165,22 @@ function MenuGuard(string $GuardString): bool
             @foreach ($menuList as $menu)
                 @if (MenuGuard($menu['guard']))
                     <x-menu-item name="{{ __($menu['label']) }}" href="{{ $menu['url'] }}" icon="{{ $menu['image'] }}"></x-menu-item>
+                @endif
+            @endforeach
+
+            @foreach ($appMenuList as $menu)
+                @php
+                    $menuUrl = $menu['url'] ?? null;
+                    if (!$menuUrl && !empty($menu['route'])) {
+                        try {
+                            $menuUrl = route($menu['route'], $menu['route_params'] ?? []);
+                        } catch (\Throwable $e) {
+                            $menuUrl = null;
+                        }
+                    }
+                @endphp
+                @if (MenuGuard($menu['guard']) && $menuUrl)
+                    <x-menu-item name="{{ __($menu['label']) }}" href="{{ $menuUrl }}" icon="{{ $menu['image'] }}"></x-menu-item>
                 @endif
             @endforeach
         </ul>

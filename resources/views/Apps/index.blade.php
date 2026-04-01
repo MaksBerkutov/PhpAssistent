@@ -30,6 +30,16 @@
             min-height: 220px;
         }
 
+        .apps-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .apps-actions form {
+            grid-column: 1 / -1;
+        }
+
         .apps-meta {
             display: flex;
             flex-wrap: wrap;
@@ -87,7 +97,15 @@
                         </div>
                         <p class="mb-3">{{ $app->description ?: __('ui.apps.no_description') }}</p>
                         <div class="mt-auto">
-                            <a href="{{ route('apps.open', $app) }}" class="btn btn-primary w-100">{{ __('ui.apps.open') }}</a>
+                            <div class="apps-actions">
+                                <a href="{{ route('apps.open', $app) }}" class="btn btn-primary">{{ __('ui.apps.open') }}</a>
+                                <a href="{{ route('apps.update.form', $app) }}" class="btn btn-outline-primary">{{ __('ui.apps.update') }}</a>
+                                <form method="POST" action="{{ route('apps.destroy', $app) }}" onsubmit="return confirm('{{ __('ui.apps.delete_confirm') }}');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger w-100">{{ __('ui.apps.delete') }}</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </article>

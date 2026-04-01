@@ -18,7 +18,7 @@ class AppInstallerController extends Controller
 
     public function index()
     {
-        $apps = Apps::all();
+        $apps = Apps::orderBy('name')->get();
 
         return view('Apps.index', compact('apps'));
     }
@@ -42,11 +42,9 @@ class AppInstallerController extends Controller
         return view('Apps.upload');
     }
 
-    public function makeSafeSlug(string $string): string
+    public function updateForm(Apps $app)
     {
-        $slug = preg_replace('/[^A-Za-z0-9]/', '', $string);
-
-        return ucfirst($slug);
+        return view('Apps.update', compact('app'));
     }
 
     public function install(Request $request)
@@ -55,71 +53,163 @@ class AppInstallerController extends Controller
             'app_zip' => 'required|file|mimes:zip|max:10240',
         ]);
 
-        $zip = $request->file('app_zip');
-        $zipPath = $zip->getRealPath();
+        $result = $this->processArchive($request->file('app_zip'));
 
-        $tempDir = storage_path('app/temp_app_' . time());
-        File::makeDirectory($tempDir, 0755, true);
-
-        $zipArchive = new \ZipArchive();
-        if ($zipArchive->open($zipPath) !== true) {
-            return back()->with('error', __('ui.apps.errors.zip_open'));
+        if (!$result['ok']) {
+            return back()->with('error', $result['message']);
         }
 
-        $zipArchive->extractTo($tempDir);
-        $zipArchive->close();
+        return redirect()->route('apps.index')->with('success', __('ui.apps.success_installed', ['name' => $result['name']]));
+    }
 
-        $manifestPath = $tempDir . '/manifest.json';
-        if (!File::exists($manifestPath)) {
-            File::deleteDirectory($tempDir);
-
-            return back()->with('error', __('ui.apps.errors.manifest_missing'));
-        }
-
-        $manifest = json_decode(File::get($manifestPath), true);
-        if (!$manifest || !isset($manifest['slug'], $manifest['name'])) {
-            File::deleteDirectory($tempDir);
-
-            return back()->with('error', __('ui.apps.errors.manifest_invalid'));
-        }
-
-        $slug = $manifest['slug'];
-        $version = $manifest['version'] ?? null;
-
-        $existingApp = Apps::where('slug', $slug)->first();
-        if ($existingApp) {
-            File::deleteDirectory(base_path('app/Apps/' . $this->makeSafeSlug($slug)));
-            $existingApp->delete();
-        }
-
-        $srcDir = $tempDir . '/src';
-        $destDir = base_path('app/Apps/' . $this->makeSafeSlug($slug));
-        File::makeDirectory($destDir, 0755, true);
-        File::copyDirectory($srcDir, $destDir);
-
-        $viewsSrc = $tempDir . '/Views';
-        if (File::exists($viewsSrc)) {
-            $viewsDest = resource_path('views/apps/' . $this->makeSafeSlug($slug));
-            File::makeDirectory($viewsDest, 0755, true);
-            File::copyDirectory($viewsSrc, $viewsDest);
-        }
-
-        $controllersSrc = $tempDir . '/Controllers';
-        if (File::exists($controllersSrc)) {
-            $controllersDest = $destDir . '/Controllers';
-            File::copyDirectory($controllersSrc, $controllersDest);
-        }
-
-        Apps::create([
-            'name' => $manifest['name'],
-            'slug' => $slug,
-            'version' => $version,
-            'entrypoint' => 'Apps\\' . $this->makeSafeSlug($slug) . '\\ServiceProvider',
-            'description' => $manifest['description'] ?? null,
+    public function update(Request $request, Apps $app)
+    {
+        $request->validate([
+            'app_zip' => 'required|file|mimes:zip|max:10240',
         ]);
 
-        File::deleteDirectory($tempDir);
+        $result = $this->processArchive($request->file('app_zip'), $app->slug);
 
-        return back()->with('success', __('ui.apps.success_installed', ['name' => $manifest['name']]));
+        if (!$result['ok']) {
+            return back()->with('error', $result['message']);
+        }
+
+        return redirect()->route('apps.index')->with('success', __('ui.apps.success_updated', ['name' => $result['name']]));
+    }
+
+    public function destroy(Apps $app)
+    {
+        $this->deleteInstalledAppFiles($app->slug);
+        $name = $app->name;
+        $app->delete();
+
+        return redirect()->route('apps.index')->with('success', __('ui.apps.success_deleted', ['name' => $name]));
+    }
+
+    public function makeSafeSlug(string $string): string
+    {
+        $slug = preg_replace('/[^A-Za-z0-9]/', '', $string);
+
+        return ucfirst($slug);
+    }
+
+    protected function processArchive($zipFile, ?string $expectedSlug = null): array
+    {
+        $zipPath = $zipFile->getRealPath();
+        $tempDir = storage_path('app/temp_app_' . time() . '_' . mt_rand(1000, 9999));
+        File::makeDirectory($tempDir, 0755, true);
+
+        try {
+            $zipArchive = new \ZipArchive();
+            if ($zipArchive->open($zipPath) !== true) {
+                return ['ok' => false, 'message' => __('ui.apps.errors.zip_open')];
+            }
+
+            $zipArchive->extractTo($tempDir);
+            $zipArchive->close();
+
+            $manifestPath = $this->findManifestPath($tempDir);
+            if (!$manifestPath) {
+                return ['ok' => false, 'message' => __('ui.apps.errors.manifest_missing')];
+            }
+
+            $manifestRaw = File::get($manifestPath);
+            $manifestRaw = preg_replace('/^\xEF\xBB\xBF/', '', $manifestRaw);
+            $manifest = json_decode($manifestRaw, true);
+
+            if (!$manifest || !isset($manifest['slug'], $manifest['name'])) {
+                $jsonError = json_last_error() !== JSON_ERROR_NONE ? json_last_error_msg() : null;
+
+                return [
+                    'ok' => false,
+                    'message' => __('ui.apps.errors.manifest_invalid') . ($jsonError ? " ({$jsonError})" : ''),
+                ];
+            }
+
+            $slug = (string) $manifest['slug'];
+            if ($expectedSlug !== null && $slug !== $expectedSlug) {
+                return [
+                    'ok' => false,
+                    'message' => __('ui.apps.errors.slug_mismatch', ['expected' => $expectedSlug, 'actual' => $slug]),
+                ];
+            }
+
+            $appRootDir = dirname($manifestPath);
+            $srcDir = $appRootDir . '/src';
+            if (!File::exists($srcDir)) {
+                return ['ok' => false, 'message' => __('ui.apps.errors.source_missing')];
+            }
+
+            $safeSlug = $this->makeSafeSlug($slug);
+            $existingApp = Apps::where('slug', $slug)->first();
+            if ($existingApp) {
+                $this->deleteInstalledAppFiles($existingApp->slug);
+            }
+
+            $destDir = base_path('app/Apps/' . $safeSlug);
+            File::makeDirectory($destDir, 0755, true);
+            File::copyDirectory($srcDir, $destDir);
+
+            $viewsSrc = $appRootDir . '/Views';
+            if (File::exists($viewsSrc)) {
+                $viewsDestUpper = resource_path('views/Apps/' . $safeSlug);
+                File::makeDirectory($viewsDestUpper, 0755, true);
+                File::copyDirectory($viewsSrc, $viewsDestUpper);
+
+                $viewsDestLower = resource_path('views/apps/' . $safeSlug);
+                File::makeDirectory($viewsDestLower, 0755, true);
+                File::copyDirectory($viewsSrc, $viewsDestLower);
+            }
+
+            $controllersSrc = $appRootDir . '/Controllers';
+            if (File::exists($controllersSrc)) {
+                $controllersDest = $destDir . '/Controllers';
+                File::copyDirectory($controllersSrc, $controllersDest);
+            }
+
+            $payload = [
+                'name' => $manifest['name'],
+                'slug' => $slug,
+                'version' => $manifest['version'] ?? null,
+                'entrypoint' => 'Apps\\' . $safeSlug . '\\ServiceProvider',
+                'description' => $manifest['description'] ?? null,
+                'schema' => $manifest['schema'] ?? null,
+            ];
+
+            if ($existingApp) {
+                $existingApp->update($payload);
+            } else {
+                Apps::create($payload);
+            }
+
+            return ['ok' => true, 'name' => $manifest['name']];
+        } finally {
+            File::deleteDirectory($tempDir);
+        }
+    }
+
+    protected function deleteInstalledAppFiles(string $slug): void
+    {
+        $safeSlug = $this->makeSafeSlug($slug);
+
+        File::deleteDirectory(base_path('app/Apps/' . $safeSlug));
+        File::deleteDirectory(resource_path('views/Apps/' . $safeSlug));
+        File::deleteDirectory(resource_path('views/apps/' . $safeSlug));
+    }
+
+    protected function findManifestPath(string $baseDir): ?string
+    {
+        $rootManifest = $baseDir . '/manifest.json';
+        if (File::exists($rootManifest)) {
+            return $rootManifest;
+        }
+
+        foreach (File::allFiles($baseDir) as $file) {
+            if (strtolower($file->getFilename()) === 'manifest.json') {
+                return $file->getPathname();
+            }
+        }
+
+        return null;
     }
 }

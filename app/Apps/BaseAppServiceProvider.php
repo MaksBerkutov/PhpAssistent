@@ -4,36 +4,40 @@ namespace Apps;
 
 abstract class BaseAppServiceProvider
 {
-    /**
-     * Схема настроек аппса
-     * @return array
-     */
     abstract public static function getSchema(): array;
 
-    /**
-     * Зарегистрировать маршруты аппса
-     */
     public function registerRoutes(): void
     {
-        // По умолчанию ничего не делает, можно переопределить в конкретном App
+        // Optional app route registration.
+    }
+
+    public function registerWidgets(): void
+    {
+        // Optional widget registration.
     }
 
     /**
-     * Зарегистрировать виджеты аппса
+     * Sidebar items provided by app.
+     *
+     * Item format:
+     * - label: string (required)
+     * - url: string (required if route is not set)
+     * - route: string (optional route name)
+     * - route_params: array (optional route params)
+     * - image: string (optional ionicon name)
+     * - guard: string (optional role filter, e.g. "admin|user")
+     *
+     * @return array<int, array<string, mixed>>
      */
-    public function registerWidgets(): void
+    public function menuItems(): array
     {
-        // По умолчанию ничего не делает
+        return [];
     }
 
     public function boot(): void
     {
-        // По умолчанию ничего не делает
+        // Optional app boot logic.
     }
 
-
-    /**
-     * Рендер интерфейса аппса 
-     */
     abstract public function render(array $data = []);
 }

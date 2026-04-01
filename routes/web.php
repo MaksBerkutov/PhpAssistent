@@ -78,6 +78,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [App\Http\Controllers\AppInstallerController::class, 'index'])->name('apps.index');
         Route::get('/upload', [App\Http\Controllers\AppInstallerController::class, 'uploadForm'])->name('apps.upload');
         Route::post('/install', [App\Http\Controllers\AppInstallerController::class, 'install'])->name('apps.install');
+        Route::get('/{app}/update', [App\Http\Controllers\AppInstallerController::class, 'updateForm'])->name('apps.update.form');
+        Route::post('/{app}/update', [App\Http\Controllers\AppInstallerController::class, 'update'])->name('apps.update');
+        Route::delete('/{app}', [App\Http\Controllers\AppInstallerController::class, 'destroy'])->name('apps.destroy');
         Route::get('/open/{app}', [App\Http\Controllers\AppInstallerController::class, 'open'])->name('apps.open');
     });
 
