@@ -62,3 +62,23 @@
     border-radius: 12px;
     padding: 12px 14px;
 }
+
+@media (max-width: 640px) {
+    .animation {
+        width: 150px;
+        height: 150px;
+        margin-top: 10px;
+    }
+
+    .circle {
+        width: 26px;
+        height: 26px;
+    }
+
+    .status {
+        max-width: 100%;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        padding: 10px 12px;
+    }
+}

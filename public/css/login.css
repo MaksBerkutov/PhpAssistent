@@ -34,6 +34,9 @@ body[data-theme="dark"] {
 body {
     margin: 0;
     min-height: 100vh;
+    min-height: 100dvh;
+    max-width: 100%;
+    overflow-x: hidden;
     font-family: "Sora", "Manrope", "Segoe UI", sans-serif;
     color: var(--auth-ink);
     background:
@@ -50,8 +53,9 @@ body[data-theme="dark"] {
 }
 
 .auth-wrap {
-    min-height: 100vh;
-    padding: 18px;
+    min-height: calc(100vh - 58px);
+    min-height: calc(100dvh - 58px);
+    padding: 14px 18px 18px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -234,7 +238,7 @@ body[data-theme="dark"] .btn-dark:focus {
 
 @media (max-width: 900px) {
     .auth-wrap {
-        padding: 12px;
+        padding: 10px 12px 14px;
     }
 
     .auth-shell {
@@ -251,6 +255,11 @@ body[data-theme="dark"] .btn-dark:focus {
 }
 
 @media (max-width: 520px) {
+    .auth-wrap {
+        min-height: calc(100vh - 86px);
+        min-height: calc(100dvh - 86px);
+    }
+
     .auth-intro,
     .auth-card {
         border-radius: 18px;
@@ -264,5 +273,23 @@ body[data-theme="dark"] .btn-dark:focus {
         min-width: auto;
         padding-left: 1rem;
         padding-right: 1rem;
+    }
+
+    .nav-pills {
+        width: 100%;
+        gap: 6px;
+    }
+
+    .nav-pills .nav-item {
+        flex: 1 1 calc(50% - 6px);
+    }
+
+    .nav-pills .nav-link {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    .auth-description {
+        max-width: 100%;
     }
 }

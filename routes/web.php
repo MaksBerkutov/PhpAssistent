@@ -84,6 +84,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/open/{app}', [App\Http\Controllers\AppInstallerController::class, 'open'])->name('apps.open');
     });
 
+    Route::middleware('checkRole:admin')->prefix('accounts')->group(function () {
+        Route::get('/', [App\Http\Controllers\AccountManagerController::class, 'index'])->name('accounts.index');
+        Route::patch('/{user}/role', [App\Http\Controllers\AccountManagerController::class, 'updateRole'])->name('accounts.role');
+        Route::delete('/{user}', [App\Http\Controllers\AccountManagerController::class, 'destroy'])->name('accounts.destroy');
+    });
+
     Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 });
 

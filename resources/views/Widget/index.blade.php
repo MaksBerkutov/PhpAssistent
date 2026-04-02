@@ -1,90 +1,126 @@
 @extends('layouts.menu')
-@section('title', 'All Widgets')
+@section('title', __('ui.widgets.title'))
+
+@section('styles')
+    <style>
+        .widget-admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+        }
+
+        .widget-admin-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .widget-admin-params {
+            display: grid;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .widget-admin-param {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: color-mix(in srgb, var(--surface-muted) 90%, transparent);
+            padding: 8px 10px;
+        }
+
+        .widget-admin-param small {
+            display: block;
+            color: var(--ink-soft);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 640px) {
+            .widget-admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+@endsection
 
 @section('content')
-    <div class="container py-4">
-
-        {{-- Форма загрузки нового виджета --}}
-        <div class="card shadow-sm mb-5">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Установить / Обновить виджет</h5>
+    <div class="page-shell">
+        <section class="page-head">
+            <div>
+                <h2 class="page-title">{{ __('ui.widgets.title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.widgets.subtitle') }}</p>
             </div>
-            <div class="card-body">
-                <form id="installForm" method="POST" action="{{ route('widgets.install') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row g-2 align-items-center">
-                        <div class="col-md-8">
-                            <input type="file" name="widget" class="form-control" required>
-                        </div>
-                        <div class="col-md-4 text-end">
-                            <button type="submit" class="btn btn-success w-100">Загрузить</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+            <a href="{{ route('widget.create') }}" class="btn btn-primary">{{ __('ui.widgets.create_widget') }}</a>
+        </section>
 
-        <h2 class="mb-4">Виджеты</h2>
+        <section class="page-card">
+            <form id="installForm" method="POST" action="{{ route('widgets.install') }}" enctype="multipart/form-data" class="row g-2 align-items-end">
+                @csrf
+                <div class="col-md-8">
+                    <label for="widgetZip" class="form-label mb-1">{{ __('ui.widgets.zip_archive') }}</label>
+                    <input id="widgetZip" type="file" name="widget" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">{{ __('ui.widgets.install_update') }}</button>
+                </div>
+            </form>
+        </section>
 
-        <div class="row">
-            @foreach ($widgets as $widget)
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-header bg-light">
+        @if($widgets->isEmpty())
+            <section class="page-empty">
+                <p class="mb-0">{{ __('ui.widgets.empty') }}</p>
+            </section>
+        @else
+            <section class="widget-admin-grid">
+                @foreach ($widgets as $widget)
+                    @php
+                        $commands = json_decode($widget->input_params, true) ?? [];
+                    @endphp
+
+                    <article class="card widget-admin-card">
+                        <div class="card-header d-flex justify-content-between align-items-center gap-2">
                             <strong>{{ $widget->name }}</strong>
+                            <span class="chip">{{ $widget->widget_name }}</span>
                         </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Имя компонента: <span
-                                    class="text-secondary">{{ $widget->widget_name }}</span></h6>
-                            <p class="card-text"><strong>Ключ:</strong> {{ $widget->accesses_key }}</p>
+                        <div class="card-body d-flex flex-column">
+                            <div class="kv-grid mb-3">
+                                <div class="kv-item">
+                                    <small>{{ __('ui.widgets.security_key') }}</small>
+                                    <strong>{{ $widget->accesses_key ?: __('ui.widgets.not_set') }}</strong>
+                                </div>
+                                <div class="kv-item">
+                                    <small>{{ __('ui.widgets.version') }}</small>
+                                    <strong>{{ $widget->version ?: '—' }}</strong>
+                                </div>
+                            </div>
 
-                            @php
-                                $commands = json_decode($widget->input_params, true);
-                            @endphp
-
-                            @if (!empty($commands))
-                                <h6 class="mt-3">Параметры:</h6>
-                                <div class="accordion" id="accordion-{{ $widget->id }}">
+                            @if(!empty($commands))
+                                <div class="widget-admin-params">
                                     @foreach ($commands as $key => $value)
-                                        <div class="accordion-item mb-2">
-                                            <h2 class="accordion-header"
-                                                id="heading-{{ $widget->id }}-{{ $loop->index }}">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse-{{ $widget->id }}-{{ $loop->index }}"
-                                                    aria-expanded="false"
-                                                    aria-controls="collapse-{{ $widget->id }}-{{ $loop->index }}">
-                                                    {{ $key }}
-                                                </button>
-                                            </h2>
-                                            <div id="collapse-{{ $widget->id }}-{{ $loop->index }}"
-                                                class="accordion-collapse collapse"
-                                                aria-labelledby="heading-{{ $widget->id }}-{{ $loop->index }}"
-                                                data-bs-parent="#accordion-{{ $widget->id }}">
-                                                <div class="accordion-body">
-                                                    <p>Тип: <strong>{{ $value }}</strong></p>
-                                                </div>
-                                            </div>
+                                        <div class="widget-admin-param">
+                                            <small>{{ $key }}</small>
+                                            <strong>{{ $value }}</strong>
                                         </div>
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-muted">Параметры отсутствуют</p>
+                                <p class="text-muted mb-0">{{ __('ui.widgets.no_extra_params') }}</p>
                             @endif
+
+                            <div class="mt-auto d-flex flex-wrap gap-2 pt-3">
+                                <a href="{{ route('widget.edit', $widget->id) }}" class="btn btn-outline-primary">{{ __('ui.widgets.edit') }}</a>
+                                <form action="{{ route('widget.delete', $widget->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('{{ __('ui.widgets.delete_confirm', ['name' => addslashes($widget->name)]) }}')">{{ __('ui.widgets.delete') }}</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <a href="{{ route('widget.edit', $widget->id) }}"
-                                class="btn btn-outline-primary btn-sm">Редактировать</a>
-                            <form action="{{ route('widget.delete', $widget->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm"
-                                    onclick="return confirm('Вы уверены, что хотите удалить виджет?')">Удалить</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+                    </article>
+                @endforeach
+            </section>
+        @endif
     </div>
 @endsection

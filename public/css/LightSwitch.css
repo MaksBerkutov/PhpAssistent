@@ -9,7 +9,7 @@
     --trans-timing-out: cubic-bezier(0.05,0.76,0.06,0.86);
 }
 .switchContainer,
-input {
+.switch__input {
     color: var(--fg);
     font: 1em/1.5 sans-serif;
 }

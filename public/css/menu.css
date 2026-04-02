@@ -79,9 +79,14 @@ html,
 body {
     margin: 0;
     min-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 body.app-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
     font-family: "Sora", "Manrope", "Segoe UI", sans-serif;
     color: var(--ink);
     background:
@@ -300,9 +305,12 @@ a {
 
 #main {
     margin: 18px 18px 18px 316px;
-    width: calc(100vw - 334px);
-    max-width: calc(100vw - 334px);
+    width: calc(100% - 334px);
+    max-width: calc(100% - 334px);
     height: calc(100vh - 36px);
+    height: calc(100dvh - 36px);
+    max-height: calc(100vh - 36px);
+    max-height: calc(100dvh - 36px);
     border-radius: var(--radius-xl);
     border: 1px solid var(--line);
     background: var(--surface);
@@ -312,6 +320,7 @@ a {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    min-width: 0;
 }
 
 .app-topbar {
@@ -428,6 +437,7 @@ a {
     width: 100%;
     flex: 1 1 auto;
     min-height: 0;
+    min-width: 0;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
@@ -443,14 +453,23 @@ a {
 
 #main .container,
 #main .container-fluid {
+    width: 100%;
     max-width: 100%;
     padding-left: 0;
     padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 #main .row {
     --bs-gutter-x: 1rem;
     --bs-gutter-y: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#main .row > * {
+    min-width: 0;
 }
 
 .alert {
@@ -616,6 +635,7 @@ select:focus {
 table {
     --bs-table-bg: transparent;
     border-color: var(--line) !important;
+    width: 100%;
 }
 
 thead th {
@@ -628,6 +648,22 @@ thead th {
 
 tbody td {
     vertical-align: middle;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+    max-width: 100%;
+}
+
+.app-content > * {
+    min-width: 0;
+}
+
+.app-content :is(h1, h2, h3, h4, h5, h6, p, td, th, label, small, li, span, a, button) {
+    overflow-wrap: anywhere;
 }
 
 .badge {
@@ -651,6 +687,100 @@ tbody td {
 .accordion-button:focus {
     border-color: transparent;
     box-shadow: 0 0 0 3px var(--secondary-soft);
+}
+
+.page-shell {
+    display: grid;
+    gap: 14px;
+}
+
+.page-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.page-title {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.1rem, 1.2vw + 0.9rem, 1.55rem);
+    font-weight: 800;
+}
+
+.page-subtitle {
+    margin: 6px 0 0;
+    color: var(--ink-body);
+    max-width: 72ch;
+}
+
+.page-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface-strong);
+    box-shadow: var(--shadow-card);
+    padding: clamp(12px, 1.8vw, 18px);
+}
+
+.page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.page-empty {
+    border: 1px dashed var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+    color: var(--ink-soft);
+}
+
+.chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-muted);
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+}
+
+.kv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.kv-item {
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface-muted) 92%, transparent);
+    padding: 10px 12px;
+}
+
+.kv-item small {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+}
+
+.kv-item strong {
+    color: var(--ink);
+    word-break: break-word;
 }
 
 @keyframes lift-in {
@@ -701,8 +831,8 @@ tbody td {
 
     #main {
         margin-left: 126px;
-        width: calc(100vw - 144px);
-        max-width: calc(100vw - 144px);
+        width: calc(100% - 144px);
+        max-width: calc(100% - 144px);
     }
 }
 
@@ -765,9 +895,10 @@ tbody td {
 
     #main {
         margin: 92px 10px 10px;
-        width: calc(100vw - 20px);
-        max-width: calc(100vw - 20px);
+        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
         height: calc(100vh - 102px);
+        height: calc(100dvh - 102px);
         border-radius: 20px;
         padding: 18px 14px 22px;
     }
@@ -789,8 +920,47 @@ tbody td {
 }
 
 @media (max-width: 640px) {
+    #main {
+        margin: 84px 8px 8px;
+        width: calc(100% - 16px);
+        max-width: calc(100% - 16px);
+        height: calc(100vh - 92px);
+        height: calc(100dvh - 92px);
+        border-radius: 16px;
+        padding: 14px 10px 16px;
+    }
+
+    #navbar {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        height: 64px;
+        padding: 7px 8px;
+        border-radius: 14px;
+    }
+
+    .navbar-item-inner {
+        padding: 7px 9px;
+    }
+
     .app-title {
         font-size: 1.25rem;
+    }
+
+    .app-topbar-actions {
+        width: 100%;
+        gap: 6px;
+    }
+
+    .app-pref-switcher {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pref-chip {
+        min-height: 28px;
+        padding: 0 8px;
+        font-size: 0.69rem;
     }
 
     .card,
@@ -798,5 +968,55 @@ tbody td {
     .list-group-item,
     .modal-content {
         border-radius: 16px;
+    }
+
+    #main table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    .app-content .card-footer.d-flex,
+    .app-content .d-flex.justify-content-between,
+    .app-content .d-flex.justify-content-end {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .app-content .card-footer .btn,
+    .app-content .btn.w-100,
+    .app-content .d-grid .btn {
+        width: 100%;
+    }
+
+    .page-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-card {
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 420px) {
+    .app-pref-label {
+        display: none;
+    }
+
+    .app-kicker {
+        font-size: 0.66rem;
+        letter-spacing: 0.06em;
+    }
+
+    .app-title {
+        font-size: 1.12rem;
+    }
+
+    .navbar-item-inner-icon-wrapper {
+        width: 22px;
+        min-width: 22px;
+        height: 22px;
     }
 }

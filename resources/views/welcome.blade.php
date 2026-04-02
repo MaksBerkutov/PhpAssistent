@@ -42,9 +42,16 @@
 
         * { box-sizing: border-box; }
 
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             margin: 0;
             min-height: 100vh;
+            min-height: 100dvh;
             font-family: "Sora", "Manrope", "Segoe UI", sans-serif;
             color: var(--ink);
             background:
@@ -260,7 +267,20 @@
         }
 
         @media (max-width: 900px) {
-            .hero { grid-template-columns: 1fr; }
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .top-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
         }
 
         @media (max-width: 560px) {
@@ -272,6 +292,7 @@
 
             .topbar { padding: 10px 12px; }
             .top-actions { gap: 6px; }
+            .pref-group { flex-wrap: wrap; }
 
             .btn {
                 min-height: 36px;
@@ -279,10 +300,24 @@
                 font-size: 0.8rem;
             }
 
+            .btn-main,
+            .btn-ghost {
+                flex: 1 1 auto;
+            }
+
             .chip {
                 min-height: 28px;
                 padding: 0 7px;
                 font-size: 0.68rem;
+            }
+
+            .hero {
+                padding: 14px 12px;
+            }
+
+            .features {
+                padding: 0 12px 14px;
+                grid-template-columns: 1fr;
             }
         }
     </style>

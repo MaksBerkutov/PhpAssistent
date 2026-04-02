@@ -1,0 +1,51 @@
+name: Laravel CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main, dev ]
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: none
+
+      - name: Validate VERSION
+        run: |
+          VERSION=$(cat VERSION)
+          echo "VERSION=$VERSION"
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Invalid VERSION format. Expected MAJOR.MINOR.PATCH"
+            exit 1
+          fi
+
+      - name: Validate CHANGELOG
+        run: |
+          VERSION=$(cat VERSION)
+          if ! grep -q "\[$VERSION\]" CHANGELOG.md; then
+            echo "CHANGELOG.md must include section [$VERSION]"
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Run tests
+        run: php artisan test --without-tty
