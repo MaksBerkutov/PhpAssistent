@@ -1,25 +1,29 @@
 # Changelog
 
-## 2026-04-02
+Все значимые изменения проекта документируются в этом файле.
 
-### Added
-- Admin-only account manager section.
-- New `AccountManagerController` with user listing, role updates, and account deletion.
-- Admin routes for account management:
+Формат основан на Keep a Changelog, а проект использует Semantic Versioning.
+
+## [0.1.0] - 2026-04-02
+
+### Добавлено
+- Раздел менеджера учетных записей только для администратора.
+- Новый `AccountManagerController` со списком пользователей, сменой ролей и удалением аккаунтов.
+- Админские маршруты для управления учетными записями:
   - `GET /accounts`
   - `PATCH /accounts/{user}/role`
   - `DELETE /accounts/{user}`
-- New view: `resources/views/accounts/index.blade.php`.
-- New i18n keys in `lang/en/ui.php` for accounts module and navigation item.
+- Новое представление: `resources/views/accounts/index.blade.php`.
+- Новые i18n-ключи в `lang/en/ui.php` для модуля аккаунтов и пункта навигации.
 
-### Changed
-- Sidebar navigation now includes an admin-only Accounts entry via translation key (`ui.nav.accounts`).
-- Accounts page switched fully to translation keys (`ui.accounts.*`).
-- Account manager controller messages switched to translation keys.
-- Russian locale file updated by user.
+### Изменено
+- В боковую навигацию добавлен админский пункт «Аккаунты» через ключ перевода (`ui.nav.accounts`).
+- Страница аккаунтов полностью переведена на ключи переводов (`ui.accounts.*`).
+- Сообщения контроллера менеджера аккаунтов переведены на ключи переводов.
+- Русская локаль обновлена пользователем.
 
-### Notes
-- Preserved existing role safety checks:
-  - cannot downgrade own account from admin;
-  - cannot delete own account;
-  - cannot remove/downgrade the last admin.
+### Примечания
+- Сохранены защитные проверки ролей:
+  - нельзя снять у себя роль администратора;
+  - нельзя удалить собственный аккаунт;
+  - нельзя удалить/понизить последнего администратора.
