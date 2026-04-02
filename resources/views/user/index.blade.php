@@ -20,11 +20,33 @@
 
         <div class="card auth-card p-4 p-lg-5">
             <ul class="nav nav-pills mb-4 d-flex justify-content-center" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active mx-1" id="pills-home-tab" data-bs-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">{{ __('ui.common.login') }}</a>
+                <li class="nav-item" role="presentation">
+                    <button
+                        class="nav-link active mx-1"
+                        id="pills-home-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-home"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-home"
+                        aria-selected="true"
+                    >
+                        {{ __('ui.common.login') }}
+                    </button>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-1" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">{{ __('ui.common.signup') }}</a>
+                <li class="nav-item" role="presentation">
+                    <button
+                        class="nav-link mx-1"
+                        id="pills-profile-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-profile"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-profile"
+                        aria-selected="false"
+                    >
+                        {{ __('ui.common.signup') }}
+                    </button>
                 </li>
             </ul>
 
