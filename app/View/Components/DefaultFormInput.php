@@ -5,7 +5,6 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use function PHPUnit\Framework\isEmpty;
 
 class DefaultFormInput extends Component
 {
@@ -20,8 +19,8 @@ class DefaultFormInput extends Component
     {
         $this->name = $name;
         $this->type = $type;
-        $this->placeholder=$placeholder!=null?$placeholder:ucwords($name,'_');
-        $this->text=$text!=null?$text:ucwords($text,'_');
+        $this->placeholder = $placeholder != null ? $placeholder : ucwords(str_replace('_', ' ', $name));
+        $this->text = $text != null ? $text : ucwords(str_replace('_', ' ', $name));
 
     }
 

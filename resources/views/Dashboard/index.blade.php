@@ -1,27 +1,45 @@
-@extends('layouts.menu')
-@section('title','Dashboard')
+﻿@extends('layouts.menu')
+@section('title', 'Панель управления')
 
 @section('content')
-    <div class="container mt-5">
-        <div class="row">
-            @foreach($widgets as $widget)
-                <x-dynamic-component :component="$widget->widget->widget_name"
-                                     :device_url="$widget->device->url"
-                                     :available="$widget->device->available"
-                                     :device_id="$widget->device_id"
-                                     :command="$widget->command"
-                                     :key="$widget->key"
-                                     :argument="$widget->argument"
-                                     :name="$widget->name"
-                                     :id="$widget->id"
-                                     :data="json_decode($widget->values)">
-                </x-dynamic-component>
-            @endforeach
-        </div>
+    <div class="page-shell">
+        <section class="page-head">
+            <div>
+                <h2 class="page-title">Панель управления</h2>
+                <p class="page-subtitle">Здесь отображаются добавленные виджеты и быстрые элементы контроля устройств.</p>
+            </div>
+            <a href="{{ route('dashboard.widget') }}" class="btn btn-primary">Добавить виджет</a>
+        </section>
+
+        @if ($widgets->isEmpty())
+            <section class="page-empty">
+                <p class="mb-2">На панели пока нет виджетов.</p>
+                <a href="{{ route('dashboard.widget') }}" class="btn btn-outline-primary">Выбрать виджет</a>
+            </section>
+        @else
+            <section class="container-fluid px-0">
+                <div class="row g-3">
+                    @foreach($widgets as $widget)
+                        <x-dynamic-component :component="$widget->widget->widget_name"
+                                             :device_url="$widget->device->url"
+                                             :available="$widget->device->available"
+                                             :device_id="$widget->device_id"
+                                             :command="$widget->command"
+                                             :key="$widget->key"
+                                             :argument="$widget->argument"
+                                             :name="$widget->name"
+                                             :id="$widget->id"
+                                             :data="json_decode($widget->values)">
+                        </x-dynamic-component>
+                    @endforeach
+                </div>
+            </section>
+        @endif
     </div>
+
     <script>
-        function PostSend(data){
-            fetch('{{route('voice.command')}}', {
+        function PostSend(data) {
+            fetch('{{ route('voice.command') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,4 +57,3 @@
         }
     </script>
 @endsection
-

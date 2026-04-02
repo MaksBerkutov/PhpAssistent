@@ -1,52 +1,102 @@
-@extends('layouts.menu')
-@section('title','Arduino Dashboard')
-@section('styles')
-    <link rel="stylesheet" href="{{asset('css/deactive.css')}}">
-@endsection
+﻿@extends('layouts.menu')
+@section('title', 'Конфигурация устройства')
+
 @section('content')
+    @php
+        $data = json_decode($jsonData, true) ?? [];
+    @endphp
 
-    <div class="container mt-5">
-        <h1>Редагування даних</h1>
+    <div class="page-shell">
+        <section class="page-head">
+            <div>
+                <h2 class="page-title">Редактирование конфигурации</h2>
+                <p class="page-subtitle">Измените параметры устройства и сохраните обновлённый JSON.</p>
+            </div>
+            <a href="{{ route('devices') }}" class="btn btn-outline-primary">К устройствам</a>
+        </section>
 
-        <form method="post" action="{{route('devices.configure')}}" >
-            @csrf
-            @php
-                $data = json_decode($jsonData, true);
-            @endphp
+        <section class="page-card" style="max-width: 860px;">
+            <form id="configureForm" method="post" action="{{ route('devices.configure') }}">
+                @csrf
 
-            @foreach ($data as $key => $value)
-                <div class="mb-3"  id="dataContainer">
-                    <label for="{{ $key }}" class="form-label">{{ ucfirst($key) }}:</label>
+                @forelse ($data as $key => $value)
+                    <div class="mb-3">
+                        <label for="cfg-{{ $key }}" class="form-label">{{ ucfirst($key) }}</label>
 
-                    @if (is_numeric($value) && strpos((string)$value, '.') !== false)  <!-- Число с плавающей запятой -->
-                    <input onchange="edit()" type="number" class="form-control" id="{{ $key }}" name="{{ $key }}" value="{{ $value }}" step="any" required>
-                    @elseif (is_numeric($value))  <!-- Просто число -->
-                    <input onchange="edit()" type="number" class="form-control" id="{{ $key }}" name="{{ $key }}" value="{{ $value }}" required>
-                    @elseif (is_string($value))  <!-- Если строка -->
-                    <input onchange="edit()" type="text" class="form-control" id="{{ $key }}" name="{{ $key }}" value="{{ $value }}" required>
-                    @endif
+                        @if (is_bool($value))
+                            <select id="cfg-{{ $key }}" class="form-select config-input" data-name="{{ $key }}" required>
+                                <option value="true" @selected($value === true)>true</option>
+                                <option value="false" @selected($value === false)>false</option>
+                            </select>
+                        @elseif (is_numeric($value) && strpos((string) $value, '.') !== false)
+                            <input id="cfg-{{ $key }}" type="number" class="form-control config-input" data-name="{{ $key }}" value="{{ $value }}" step="any" required>
+                        @elseif (is_numeric($value))
+                            <input id="cfg-{{ $key }}" type="number" class="form-control config-input" data-name="{{ $key }}" value="{{ $value }}" required>
+                        @else
+                            <input id="cfg-{{ $key }}" type="text" class="form-control config-input" data-name="{{ $key }}" value="{{ $value }}" required>
+                        @endif
+                    </div>
+                @empty
+                    <p class="mb-0 text-muted">Конфигурация пуста.</p>
+                @endforelse
+
+                <input type="hidden" id="jsonData" name="jsonData">
+                <input type="hidden" name="id" value="{{ $id }}">
+
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <a href="{{ route('devices') }}" class="btn btn-outline-primary">Отмена</a>
                 </div>
-            @endforeach
-
-            <input type="hidden" id="jsonData" name="jsonData">
-            <input type="hidden"  name="id" value="{{$id}}">
-
-            <button type="submit" class="btn btn-primary">Зберегти</button>
-        </form>
+            </form>
+        </section>
     </div>
 
     <script>
-        function edit(){
-            var updatedData = {};
-            var inputs = document.querySelectorAll("#dataContainer input");
-            inputs.forEach(function(input) {
-                updatedData[input.name] = input.value;
-            });
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('configureForm');
+            const jsonDataInput = document.getElementById('jsonData');
 
-            document.getElementById("jsonData").value = JSON.stringify(updatedData);
+            if (!form || !jsonDataInput) {
+                return;
+            }
 
-            var formData = new FormData(document.getElementById("dataForm"));
-        }
+            function normalizeValue(input) {
+                const raw = input.value;
+                const inputType = input.getAttribute('type');
+
+                if (input.tagName === 'SELECT' && (raw === 'true' || raw === 'false')) {
+                    return raw === 'true';
+                }
+
+                if (inputType === 'number') {
+                    if (raw.includes('.')) {
+                        return parseFloat(raw);
+                    }
+                    return parseInt(raw, 10);
+                }
+
+                return raw;
+            }
+
+            function collectData() {
+                const updatedData = {};
+                const inputs = form.querySelectorAll('.config-input');
+
+                inputs.forEach(function (input) {
+                    const name = input.dataset.name;
+                    if (!name) {
+                        return;
+                    }
+                    updatedData[name] = normalizeValue(input);
+                });
+
+                jsonDataInput.value = JSON.stringify(updatedData);
+            }
+
+            form.addEventListener('submit', collectData);
+            form.addEventListener('input', collectData);
+            form.addEventListener('change', collectData);
+            collectData();
+        });
     </script>
-
 @endsection

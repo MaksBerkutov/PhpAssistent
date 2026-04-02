@@ -689,6 +689,100 @@ iframe {
     box-shadow: 0 0 0 3px var(--secondary-soft);
 }
 
+.page-shell {
+    display: grid;
+    gap: 14px;
+}
+
+.page-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.page-title {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.1rem, 1.2vw + 0.9rem, 1.55rem);
+    font-weight: 800;
+}
+
+.page-subtitle {
+    margin: 6px 0 0;
+    color: var(--ink-body);
+    max-width: 72ch;
+}
+
+.page-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface-strong);
+    box-shadow: var(--shadow-card);
+    padding: clamp(12px, 1.8vw, 18px);
+}
+
+.page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.page-empty {
+    border: 1px dashed var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+    color: var(--ink-soft);
+}
+
+.chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-muted);
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+}
+
+.kv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.kv-item {
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface-muted) 92%, transparent);
+    padding: 10px 12px;
+}
+
+.kv-item small {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+}
+
+.kv-item strong {
+    color: var(--ink);
+    word-break: break-word;
+}
+
 @keyframes lift-in {
     from {
         opacity: 0;
@@ -895,6 +989,14 @@ iframe {
     .app-content .btn.w-100,
     .app-content .d-grid .btn {
         width: 100%;
+    }
+
+    .page-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-card {
+        border-radius: 16px;
     }
 }
 

@@ -1,9 +1,10 @@
-@extends('layouts.main')
+﻿@extends('layouts.main')
 @section('title', __('ui.auth.page_title'))
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/login.css') }}?v={{ filemtime(public_path('css/login.css')) }}">
     <script src="{{ asset('js/login.js') }}?v={{ filemtime(public_path('js/login.js')) }}"></script>
 @endsection
+
 @section('content')
 <div class="auth-wrap">
     <div class="auth-shell">
@@ -52,26 +53,22 @@
 
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <form method="post" action="{{route('authentication')}}">
+                    <form method="post" action="{{ route('authentication') }}">
                         @csrf
-                        <div class="form">
-                            <x-default-form-input type="text" name="email"/>
-                            <x-default-form-input type="password" name="password"/>
-                            <button class="btn btn-dark w-100">{{ __('ui.common.login') }}</button>
-                        </div>
+                        <x-default-form-input type="text" name="email"/>
+                        <x-default-form-input type="password" name="password"/>
+                        <button class="btn btn-dark w-100">{{ __('ui.common.login') }}</button>
                     </form>
                 </div>
 
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <form method="post" action="{{route('register')}}">
+                    <form method="post" action="{{ route('register') }}">
                         @csrf
-                        <div class="form">
-                            <x-default-form-input type="text" name="name"/>
-                            <x-default-form-input type="text" name="email"/>
-                            <x-default-form-input type="password" name="password"/>
-                            <x-default-form-input type="password" name="password_confirmation" placeholder="Password confirmation"/>
-                            <button class="btn btn-dark w-100">{{ __('ui.common.signup') }}</button>
-                        </div>
+                        <x-default-form-input type="text" name="name"/>
+                        <x-default-form-input type="text" name="email"/>
+                        <x-default-form-input type="password" name="password"/>
+                        <x-default-form-input type="password" name="password_confirmation" placeholder="Подтверждение пароля"/>
+                        <button class="btn btn-dark w-100">{{ __('ui.common.signup') }}</button>
                     </form>
                 </div>
             </div>
