@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Конфигурация устройства')
+@extends('layouts.menu')
+@section('title', __('ui.devices.config_title'))
 
 @section('content')
     @php
@@ -9,10 +9,10 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Редактирование конфигурации</h2>
-                <p class="page-subtitle">Измените параметры устройства и сохраните обновлённый JSON.</p>
+                <h2 class="page-title">{{ __('ui.devices.config_edit_title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.devices.config_subtitle') }}</p>
             </div>
-            <a href="{{ route('devices') }}" class="btn btn-outline-primary">К устройствам</a>
+            <a href="{{ route('devices') }}" class="btn btn-outline-primary">{{ __('ui.devices.back_to_list') }}</a>
         </section>
 
         <section class="page-card" style="max-width: 860px;">
@@ -37,15 +37,15 @@
                         @endif
                     </div>
                 @empty
-                    <p class="mb-0 text-muted">Конфигурация пуста.</p>
+                    <p class="mb-0 text-muted">{{ __('ui.devices.config_empty') }}</p>
                 @endforelse
 
                 <input type="hidden" id="jsonData" name="jsonData">
                 <input type="hidden" name="id" value="{{ $id }}">
 
                 <div class="d-flex flex-wrap gap-2">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                    <a href="{{ route('devices') }}" class="btn btn-outline-primary">Отмена</a>
+                    <button type="submit" class="btn btn-primary">{{ __('ui.devices.config_save') }}</button>
+                    <a href="{{ route('devices') }}" class="btn btn-outline-primary">{{ __('ui.common.cancel') }}</a>
                 </div>
             </form>
         </section>

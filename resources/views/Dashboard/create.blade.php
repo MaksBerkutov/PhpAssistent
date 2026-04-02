@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Каталог виджетов')
+@extends('layouts.menu')
+@section('title', __('ui.dashboard.catalog_title'))
 
 @section('styles')
     <style>
@@ -54,24 +54,24 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Каталог виджетов</h2>
-                <p class="page-subtitle">Выберите подходящий виджет и добавьте его на дашборд. Для приватных виджетов можно использовать ключ доступа.</p>
+                <h2 class="page-title">{{ __('ui.dashboard.catalog_title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.dashboard.catalog_subtitle') }}</p>
             </div>
         </section>
 
         <section class="page-card">
             <form id="accessForm" class="widget-filter">
                 <div>
-                    <label for="accessKey" class="form-label mb-1">Ключ доступа (необязательно)</label>
-                    <input id="accessKey" type="text" class="form-control" placeholder="Введите ключ безопасности">
+                    <label for="accessKey" class="form-label mb-1">{{ __('ui.dashboard.access_key_label', ['optional' => __('ui.common.optional')]) }}</label>
+                    <input id="accessKey" type="text" class="form-control" placeholder="{{ __('ui.dashboard.access_key_placeholder') }}">
                 </div>
-                <button type="button" class="btn btn-outline-primary" onclick="applyAccessKey()">Применить ключ</button>
+                <button type="button" class="btn btn-outline-primary" onclick="applyAccessKey()">{{ __('ui.dashboard.apply_key') }}</button>
             </form>
         </section>
 
         @if($widgets->isEmpty())
             <section class="page-empty">
-                <p class="mb-0">Виджеты не найдены для текущего ключа.</p>
+                <p class="mb-0">{{ __('ui.dashboard.no_widgets_for_key') }}</p>
             </section>
         @else
             <section class="page-grid">
@@ -87,8 +87,8 @@
                         <div class="card-body d-flex flex-column">
                             <div class="kv-grid mb-3">
                                 <div class="kv-item">
-                                    <small>Ключ доступа</small>
-                                    <strong>{{ $widget->accesses_key ?: 'Не требуется' }}</strong>
+                                    <small>{{ __('ui.dashboard.access_key') }}</small>
+                                    <strong>{{ $widget->accesses_key ?: __('ui.dashboard.not_required') }}</strong>
                                 </div>
                             </div>
 
@@ -102,11 +102,11 @@
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-muted mb-0">Параметры не требуются.</p>
+                                <p class="text-muted mb-0">{{ __('ui.dashboard.params_not_required') }}</p>
                             @endif
 
                             <div class="mt-auto pt-3">
-                                <a href="{{ route('dashboard.widget.add', $widget->id) }}" class="btn btn-primary w-100">Добавить на дашборд</a>
+                                <a href="{{ route('dashboard.widget.add', $widget->id) }}" class="btn btn-primary w-100">{{ __('ui.dashboard.add_to_dashboard') }}</a>
                             </div>
                         </div>
                     </article>

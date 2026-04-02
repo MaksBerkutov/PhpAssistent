@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Голосовой помощник')
+@extends('layouts.menu')
+@section('title', __('ui.voice.title'))
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/voice.css') }}">
     <script src="{{ asset('js/voice.js') }}"></script>
@@ -9,10 +9,10 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Голосовой помощник</h2>
-                <p class="page-subtitle">Система слушает ключевое слово и выполняет сохранённые голосовые команды.</p>
+                <h2 class="page-title">{{ __('ui.voice.title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.voice.subtitle') }}</p>
             </div>
-            <a href="{{ route('voice.create') }}" class="btn btn-outline-primary">Добавить команду</a>
+            <a href="{{ route('voice.create') }}" class="btn btn-outline-primary">{{ __('ui.voice.add_command') }}</a>
         </section>
 
         <section class="page-card text-center">
@@ -21,7 +21,7 @@
                 <div class="circle" style="animation-play-state: paused; display: none;"></div>
                 <div class="circle" style="animation-play-state: paused; display: none;"></div>
             </div>
-            <div class="status" id="status">Статус: ожидание команды "Ассистент"</div>
+            <div class="status" id="status">{{ __('ui.voice.status_waiting') }}</div>
         </section>
     </div>
 
@@ -39,13 +39,13 @@
                     circle.style.animationPlayState = 'running';
                     circle.style.display = 'block';
                 });
-                status.textContent = 'Статус: слушаю команду...';
+                status.textContent = '{{ __('ui.voice.status_listening') }}';
             } else {
                 circles.forEach(circle => {
                     circle.style.animationPlayState = 'paused';
                     circle.style.display = 'none';
                 });
-                status.textContent = 'Статус: ожидание команды "Ассистент"';
+                status.textContent = '{{ __('ui.voice.status_waiting') }}';
             }
         });
 
@@ -81,7 +81,7 @@
                     break;
                 @endforeach
                 default:
-                    speak('Неизвестная команда');
+                    speak('{{ __('ui.voice.unknown_command') }}');
             }
         }
     </script>

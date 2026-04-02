@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Управление виджетами')
+@extends('layouts.menu')
+@section('title', __('ui.widgets.title'))
 
 @section('styles')
     <style>
@@ -49,28 +49,28 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Управление виджетами</h2>
-                <p class="page-subtitle">Устанавливайте, редактируйте и удаляйте виджеты системы.</p>
+                <h2 class="page-title">{{ __('ui.widgets.title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.widgets.subtitle') }}</p>
             </div>
-            <a href="{{ route('widget.create') }}" class="btn btn-primary">Создать виджет</a>
+            <a href="{{ route('widget.create') }}" class="btn btn-primary">{{ __('ui.widgets.create_widget') }}</a>
         </section>
 
         <section class="page-card">
             <form id="installForm" method="POST" action="{{ route('widgets.install') }}" enctype="multipart/form-data" class="row g-2 align-items-end">
                 @csrf
                 <div class="col-md-8">
-                    <label for="widgetZip" class="form-label mb-1">ZIP архив виджета</label>
+                    <label for="widgetZip" class="form-label mb-1">{{ __('ui.widgets.zip_archive') }}</label>
                     <input id="widgetZip" type="file" name="widget" class="form-control" required>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-success w-100">Установить / обновить</button>
+                    <button type="submit" class="btn btn-success w-100">{{ __('ui.widgets.install_update') }}</button>
                 </div>
             </form>
         </section>
 
         @if($widgets->isEmpty())
             <section class="page-empty">
-                <p class="mb-0">Пока нет установленных виджетов.</p>
+                <p class="mb-0">{{ __('ui.widgets.empty') }}</p>
             </section>
         @else
             <section class="widget-admin-grid">
@@ -87,11 +87,11 @@
                         <div class="card-body d-flex flex-column">
                             <div class="kv-grid mb-3">
                                 <div class="kv-item">
-                                    <small>Ключ безопасности</small>
-                                    <strong>{{ $widget->accesses_key ?: 'Не задан' }}</strong>
+                                    <small>{{ __('ui.widgets.security_key') }}</small>
+                                    <strong>{{ $widget->accesses_key ?: __('ui.widgets.not_set') }}</strong>
                                 </div>
                                 <div class="kv-item">
-                                    <small>Версия</small>
+                                    <small>{{ __('ui.widgets.version') }}</small>
                                     <strong>{{ $widget->version ?: '—' }}</strong>
                                 </div>
                             </div>
@@ -106,15 +106,15 @@
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-muted mb-0">У виджета нет дополнительных параметров.</p>
+                                <p class="text-muted mb-0">{{ __('ui.widgets.no_extra_params') }}</p>
                             @endif
 
                             <div class="mt-auto d-flex flex-wrap gap-2 pt-3">
-                                <a href="{{ route('widget.edit', $widget->id) }}" class="btn btn-outline-primary">Редактировать</a>
+                                <a href="{{ route('widget.edit', $widget->id) }}" class="btn btn-outline-primary">{{ __('ui.widgets.edit') }}</a>
                                 <form action="{{ route('widget.delete', $widget->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Удалить виджет {{ $widget->name }}?')">Удалить</button>
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('{{ __('ui.widgets.delete_confirm', ['name' => addslashes($widget->name)]) }}')">{{ __('ui.widgets.delete') }}</button>
                                 </form>
                             </div>
                         </div>

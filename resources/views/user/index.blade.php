@@ -1,4 +1,4 @@
-﻿@extends('layouts.main')
+@extends('layouts.main')
 @section('title', __('ui.auth.page_title'))
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/login.css') }}?v={{ filemtime(public_path('css/login.css')) }}">
@@ -67,7 +67,7 @@
                         <x-default-form-input type="text" name="name"/>
                         <x-default-form-input type="text" name="email"/>
                         <x-default-form-input type="password" name="password"/>
-                        <x-default-form-input type="password" name="password_confirmation" placeholder="Подтверждение пароля"/>
+                        <x-default-form-input type="password" name="password_confirmation" :placeholder="__('ui.auth.password_confirmation')"/>
                         <button class="btn btn-dark w-100">{{ __('ui.common.signup') }}</button>
                     </form>
                 </div>

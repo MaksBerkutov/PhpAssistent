@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="{{ asset('css/LightSwitch.css') }}">
+<link rel="stylesheet" href="{{ asset('css/LightSwitch.css') }}">
 <link rel="stylesheet" href="{{ asset('css/deactive.css') }}">
 
 <div class="col-md-6 @if (!$isOnline) deactivated @endif">
@@ -30,15 +30,15 @@
                             <path d="m9,10c-2.209,0-4-1.791-4-4s1.791-4,4-4c.304,0,.598.041.883.105-.995-.992-2.367-1.605-3.883-1.605C2.962.5.5,2.962.5,6s2.462,5.5,5.5,5.5c1.516,0,2.888-.613,3.883-1.605-.285.064-.578.105-.883.105Z" />
                         </g>
                     </svg>
-                    <span class="switch__sr">Переключить свет</span>
+                    <span class="switch__sr">{{ __('ui.widgets.light_toggle') }}</span>
                 </label>
             </div>
         </div>
 
         <div class="card-body text-center">
             <ion-icon name="sunny-outline" style="font-size: 50px;"></ion-icon>
-            <h5 class="card-title mt-3">Свет</h5>
-            <p class="card-text mb-0">Статус: <span id="light-status-{{ $id }}">{{ $is_light ? 'Включено' : 'Выключено' }}</span></p>
+            <h5 class="card-title mt-3">{{ __('ui.widgets.light_title') }}</h5>
+            <p class="card-text mb-0">{{ __('ui.common.status') }}: <span id="light-status-{{ $id }}">{{ $is_light ? __('ui.widgets.light_on') : __('ui.widgets.light_off') }}</span></p>
         </div>
     </div>
 </div>
@@ -53,14 +53,14 @@
                 command: '{{ $command_on }}',
                 arg: '{{ $arg_command_on }}'
             });
-            status.textContent = 'Включено';
+            status.textContent = '{{ __('ui.widgets.light_on') }}';
         } else {
             PostSend({
                 devices_id: '{{ $device_id }}',
                 command: '{{ $command_off }}',
                 arg: '{{ $arg_command_off }}'
             });
-            status.textContent = 'Выключено';
+            status.textContent = '{{ __('ui.widgets.light_off') }}';
         }
     }
 </script>

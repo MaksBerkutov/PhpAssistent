@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Ответ устройства')
+@extends('layouts.menu')
+@section('title', __('ui.devices.response_title'))
 
 @section('styles')
     <style>
@@ -22,15 +22,15 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Ответ на команду: {{ $validated['command'] }}</h2>
-                <p class="page-subtitle">Источник: {{ $validated['url'] }}</p>
+                <h2 class="page-title">{{ __('ui.devices.response_for', ['command' => $validated['command']]) }}</h2>
+                <p class="page-subtitle">{{ __('ui.devices.response_source', ['source' => $validated['url']]) }}</p>
             </div>
-            <a href="{{ route('devices') }}" class="btn btn-outline-primary">К устройствам</a>
+            <a href="{{ route('devices') }}" class="btn btn-outline-primary">{{ __('ui.devices.back_to_list') }}</a>
         </section>
 
         @if(empty($response))
             <section class="page-empty">
-                <p class="mb-0">Устройство не вернуло данных.</p>
+                <p class="mb-0">{{ __('ui.devices.no_data') }}</p>
             </section>
         @else
             <section class="response-grid">

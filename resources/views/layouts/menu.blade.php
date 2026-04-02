@@ -1,4 +1,4 @@
-﻿@php
+@php
 $menuList = [
     [
         'label' => 'ui.nav.home',
@@ -76,6 +76,12 @@ $menuList = [
         'label' => 'ui.nav.install_app',
         'url' => route('apps.upload'),
         'image' => 'cloud-upload-outline',
+        'guard' => 'admin',
+    ],
+    [
+        'label' => 'ui.nav.accounts',
+        'url' => route('accounts.index'),
+        'image' => 'people-outline',
         'guard' => 'admin',
     ],
     [

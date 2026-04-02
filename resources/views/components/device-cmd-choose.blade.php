@@ -1,11 +1,11 @@
-﻿@php
+@php
     $selectedCommand = old($name, $old ?? null);
 @endphp
 
 <div class="mb-3">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     <select id="{{ $name }}" name="{{ $name }}" class="form-select @error($name) is-invalid @enderror">
-        <option value="">Выберите команду</option>
+        <option value="">{{ __('ui.common.select_command') }}</option>
     </select>
     @error($name)
         <div class="invalid-feedback">{{ $message }}</div>
@@ -36,7 +36,7 @@
         }
 
         function refreshCommands() {
-            commandSelect.innerHTML = '<option value="">Выберите команду</option>';
+            commandSelect.innerHTML = '<option value="">{{ __('ui.common.select_command') }}</option>';
 
             const selectedModule = deviceSelect.options[deviceSelect.selectedIndex];
             const commandArray = parseCommands(selectedModule ? selectedModule.getAttribute('data-commands') : null);

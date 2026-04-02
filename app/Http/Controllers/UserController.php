@@ -100,19 +100,19 @@ class UserController extends Controller
     }
     public function send_verify(request $request){
         if (!$this->canSendMail()) {
-            return back()->with('error', 'Mail server is unavailable. Verification link was not sent.');
+            return back()->with('error', __('ui.messages.mail_unavailable'));
         }
 
         try {
             $request->user()->sendEmailVerificationNotification();
-            return back()->with('message', 'Verification link sent!');
+            return back()->with('message', __('ui.messages.verification_link_sent'));
         } catch (\Throwable $exception) {
             Log::warning('Verification resend failed.', [
                 'email' => optional($request->user())->email,
                 'error' => $exception->getMessage(),
             ]);
 
-            return back()->with('error', 'Failed to send verification email.');
+            return back()->with('error', __('ui.messages.verification_failed'));
         }
     }
 }

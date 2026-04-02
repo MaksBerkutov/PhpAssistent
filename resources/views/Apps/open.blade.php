@@ -1,4 +1,4 @@
-﻿@extends('layouts.menu')
+@extends('layouts.menu')
 @section('title', __('ui.apps.open_title', ['name' => $app->name]))
 
 @section('styles')

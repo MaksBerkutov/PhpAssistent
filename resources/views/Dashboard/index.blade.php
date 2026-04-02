@@ -1,20 +1,20 @@
-﻿@extends('layouts.menu')
-@section('title', 'Панель управления')
+@extends('layouts.menu')
+@section('title', __('ui.dashboard.title'))
 
 @section('content')
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Панель управления</h2>
-                <p class="page-subtitle">Здесь отображаются добавленные виджеты и быстрые элементы контроля устройств.</p>
+                <h2 class="page-title">{{ __('ui.dashboard.title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.dashboard.subtitle') }}</p>
             </div>
-            <a href="{{ route('dashboard.widget') }}" class="btn btn-primary">Добавить виджет</a>
+            <a href="{{ route('dashboard.widget') }}" class="btn btn-primary">{{ __('ui.dashboard.add_widget') }}</a>
         </section>
 
         @if ($widgets->isEmpty())
             <section class="page-empty">
-                <p class="mb-2">На панели пока нет виджетов.</p>
-                <a href="{{ route('dashboard.widget') }}" class="btn btn-outline-primary">Выбрать виджет</a>
+                <p class="mb-2">{{ __('ui.dashboard.empty') }}</p>
+                <a href="{{ route('dashboard.widget') }}" class="btn btn-outline-primary">{{ __('ui.dashboard.choose_widget') }}</a>
             </section>
         @else
             <section class="container-fluid px-0">

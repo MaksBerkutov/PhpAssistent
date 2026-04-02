@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Добавление виджета')
+@extends('layouts.menu')
+@section('title', __('ui.dashboard.add_widget'))
 
 @section('styles')
     <style>
@@ -25,10 +25,10 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Добавление виджета: {{ $widget->name }}</h2>
-                <p class="page-subtitle">Заполните параметры и привяжите виджет к устройству.</p>
+                <h2 class="page-title">{{ __('ui.dashboard.add_title', ['name' => $widget->name]) }}</h2>
+                <p class="page-subtitle">{{ __('ui.dashboard.add_subtitle') }}</p>
             </div>
-            <a href="{{ route('dashboard.widget') }}" class="btn btn-outline-primary">Назад к каталогу</a>
+            <a href="{{ route('dashboard.widget') }}" class="btn btn-outline-primary">{{ __('ui.dashboard.back_to_catalog') }}</a>
         </section>
 
         <section class="page-card widget-add-form">
@@ -36,21 +36,21 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Название виджета на панели</label>
+                    <label for="name" class="form-label">{{ __('ui.dashboard.display_name') }}</label>
                     <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" required value="{{ old('name') }}">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <x-device-choose name="device_id" :devices="$devices" label="Устройство" />
+                <x-device-choose name="device_id" :devices="$devices" :label="__('ui.dashboard.device')" />
 
-                <x-device-cmd-choose name="command" deviceChoseName="device_id" label="Команда для устройства" />
+                <x-device-cmd-choose name="command" deviceChoseName="device_id" :label="__('ui.dashboard.command_for_device')" />
 
-                <x-device-arg-cmd-choose name="argument" label="Аргумент команды" />
+                <x-device-arg-cmd-choose name="argument" :label="__('ui.dashboard.command_argument')" />
 
                 <div class="mb-3">
-                    <label for="key" class="form-label">Ключ данных</label>
+                    <label for="key" class="form-label">{{ __('ui.dashboard.data_key') }}</label>
                     <input type="text" id="key" name="key" class="form-control @error('key') is-invalid @enderror" required value="{{ old('key') }}">
                     @error('key')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -61,8 +61,8 @@
                     @foreach($commands as $key => $value)
                         @if($value === 'command')
                             <div class="widget-dynamic-block">
-                                <x-device-cmd-choose name="{{ $key }}" deviceChoseName="device_id" label="Команда для {{ $key }}" />
-                                <x-device-arg-cmd-choose name="arg_{{ $key }}" label="Аргумент для {{ $key }}" />
+                                <x-device-cmd-choose name="{{ $key }}" deviceChoseName="device_id" :label="__('ui.dashboard.command_for', ['name' => $key])" />
+                                <x-device-arg-cmd-choose name="arg_{{ $key }}" :label="__('ui.dashboard.arg_for', ['name' => $key])" />
                             </div>
                         @elseif($value === 'text')
                             <div class="widget-dynamic-block">
@@ -80,8 +80,8 @@
                 <input type="hidden" name="widget_id" value="{{ $widget->id }}">
 
                 <div class="d-flex flex-wrap gap-2">
-                    <button type="submit" class="btn btn-primary">Добавить виджет</button>
-                    <a href="{{ route('dashboard.widget') }}" class="btn btn-outline-primary">Отмена</a>
+                    <button type="submit" class="btn btn-primary">{{ __('ui.dashboard.submit_add_widget') }}</button>
+                    <a href="{{ route('dashboard.widget') }}" class="btn btn-outline-primary">{{ __('ui.common.cancel') }}</a>
                 </div>
             </form>
         </section>

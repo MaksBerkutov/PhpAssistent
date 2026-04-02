@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Создать сценарий')
+@extends('layouts.menu')
+@section('title', __('ui.scenarios.create_scenario'))
 
 @section('styles')
     <style>
@@ -19,10 +19,10 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Создание сценария</h2>
-                <p class="page-subtitle">Сценарий запускается по ключу и значению, а затем выполняет выбранные действия.</p>
+                <h2 class="page-title">{{ __('ui.scenarios.create_title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.scenarios.create_subtitle') }}</p>
             </div>
-            <a href="{{ route('scenario') }}" class="btn btn-outline-primary">К списку сценариев</a>
+            <a href="{{ route('scenario') }}" class="btn btn-outline-primary">{{ __('ui.scenarios.back_to_list') }}</a>
         </section>
 
         <section class="page-card scenario-form">
@@ -30,9 +30,9 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="module" class="form-label">Устройство-источник</label>
+                    <label for="module" class="form-label">{{ __('ui.scenarios.source_device') }}</label>
                     <select id="module" name="devices_id" class="form-select @error('devices_id') is-invalid @enderror" required>
-                        <option value="">Выберите устройство</option>
+                        <option value="">{{ __('ui.common.select_device') }}</option>
                         @foreach ($devices as $device)
                             <option value="{{ $device->id }}" {{ old('devices_id') == $device->id ? 'selected' : '' }}>
                                 {{ $device->name }}
@@ -44,19 +44,19 @@
                     @enderror
                 </div>
 
-                <x-default-form-input type="text" name="key" placeholder="Например: State" text="Ключ" />
-                <x-default-form-input type="text" name="value" placeholder="Например: open" text="Значение" />
+                <x-default-form-input type="text" name="key" :placeholder="__('ui.scenarios.trigger_key_placeholder')" :text="__('ui.scenarios.trigger_key')" />
+                <x-default-form-input type="text" name="value" :placeholder="__('ui.scenarios.trigger_value_placeholder')" :text="__('ui.scenarios.trigger_value')" />
 
                 <div class="mb-3">
-                    <label for="actions" class="form-label">Действия</label>
+                    <label for="actions" class="form-label">{{ __('ui.scenarios.actions') }}</label>
                     <select id="actions" name="actions[]" class="form-select @error('actions') is-invalid @enderror" multiple required>
-                        <option value="log" {{ in_array('log', old('actions', [])) ? 'selected' : '' }}>Логирование</option>
-                        <option value="save_db" {{ in_array('save_db', old('actions', [])) ? 'selected' : '' }}>Сохранение в БД</option>
-                        <option value="notify" {{ in_array('notify', old('actions', [])) ? 'selected' : '' }}>Уведомление</option>
-                        <option value="change_state" {{ in_array('change_state', old('actions', [])) ? 'selected' : '' }}>Изменение состояния устройства</option>
-                        <option value="send_api" {{ in_array('send_api', old('actions', [])) ? 'selected' : '' }}>Отправка во внешний API</option>
+                        <option value="log" {{ in_array('log', old('actions', [])) ? 'selected' : '' }}>{{ __('ui.scenarios.action_log') }}</option>
+                        <option value="save_db" {{ in_array('save_db', old('actions', [])) ? 'selected' : '' }}>{{ __('ui.scenarios.action_save_db') }}</option>
+                        <option value="notify" {{ in_array('notify', old('actions', [])) ? 'selected' : '' }}>{{ __('ui.scenarios.action_notify') }}</option>
+                        <option value="change_state" {{ in_array('change_state', old('actions', [])) ? 'selected' : '' }}>{{ __('ui.scenarios.action_change_state') }}</option>
+                        <option value="send_api" {{ in_array('send_api', old('actions', [])) ? 'selected' : '' }}>{{ __('ui.scenarios.action_send_api') }}</option>
                     </select>
-                    <div class="scenario-action-note">Удерживайте Ctrl (или Cmd), чтобы выбрать несколько пунктов.</div>
+                    <div class="scenario-action-note">{{ __('ui.scenarios.action_note') }}</div>
                     @error('actions')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -71,8 +71,8 @@
                 </div>
 
                 <div class="d-flex flex-wrap gap-2 mt-3">
-                    <button type="submit" class="btn btn-primary">Создать сценарий</button>
-                    <a href="{{ route('scenario') }}" class="btn btn-outline-primary">Отмена</a>
+                    <button type="submit" class="btn btn-primary">{{ __('ui.scenarios.submit_create') }}</button>
+                    <a href="{{ route('scenario') }}" class="btn btn-outline-primary">{{ __('ui.common.cancel') }}</a>
                 </div>
             </form>
         </section>

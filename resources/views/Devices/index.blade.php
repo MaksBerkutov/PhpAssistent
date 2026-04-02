@@ -1,5 +1,5 @@
-﻿@extends('layouts.menu')
-@section('title', 'Устройства')
+@extends('layouts.menu')
+@section('title', __('ui.devices.title'))
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/deactive.css') }}">
     <style>
@@ -44,16 +44,16 @@
     <div class="page-shell">
         <section class="page-head">
             <div>
-                <h2 class="page-title">Устройства</h2>
-                <p class="page-subtitle">Отправляйте команды, обновляйте прошивку и открывайте конфигурацию устройств.</p>
+                <h2 class="page-title">{{ __('ui.devices.title') }}</h2>
+                <p class="page-subtitle">{{ __('ui.devices.subtitle') }}</p>
             </div>
-            <a href="{{ route('devices.create') }}" class="btn btn-primary">Добавить устройство</a>
+            <a href="{{ route('devices.create') }}" class="btn btn-primary">{{ __('ui.devices.add_device') }}</a>
         </section>
 
         @if($devices->isEmpty())
             <section class="page-empty">
-                <p class="mb-2">Устройства ещё не добавлены.</p>
-                <a href="{{ route('devices.create') }}" class="btn btn-outline-primary">Создать первое устройство</a>
+                <p class="mb-2">{{ __('ui.devices.empty') }}</p>
+                <a href="{{ route('devices.create') }}" class="btn btn-outline-primary">{{ __('ui.devices.create_first') }}</a>
             </section>
         @else
             <section class="device-list">
@@ -90,7 +90,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="arg-{{ $device->id }}" class="form-label">Аргумент (необязательно)</label>
+                                    <label for="arg-{{ $device->id }}" class="form-label">{{ __('ui.devices.arg_optional', ['optional' => __('ui.common.optional')]) }}</label>
                                     <input type="text" class="form-control @error('arg') is-invalid @enderror" id="arg-{{ $device->id }}" name="arg" value="{{ $device->url == old('url') ? old('arg') : '' }}">
                                     @error('arg')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -103,9 +103,9 @@
                                     <form method="post" action="{{ route('devices.firmware') }}" enctype="multipart/form-data" class="page-card p-3">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $device->id }}">
-                                        <label for="firmware-{{ $device->id }}" class="form-label mb-1">Обновление прошивки (.bin)</label>
+                                        <label for="firmware-{{ $device->id }}" class="form-label mb-1">{{ __('ui.devices.firmware_update_label') }}</label>
                                         <input id="firmware-{{ $device->id }}" type="file" name="firmware" accept=".bin" class="form-control mb-2">
-                                        <button type="submit" class="btn btn-outline-warning">Обновить прошивку</button>
+                                        <button type="submit" class="btn btn-outline-warning">{{ __('ui.devices.firmware_update') }}</button>
                                         @error('id')
                                             <div class="text-danger mt-2">{{ $message }}</div>
                                         @enderror
@@ -119,7 +119,7 @@
                                     <form method="get" action="{{ route('devices.configure') }}">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $device->id }}">
-                                        <button type="submit" class="btn btn-outline-primary">Открыть конфигурацию</button>
+                                        <button type="submit" class="btn btn-outline-primary">{{ __('ui.devices.open_config') }}</button>
                                     </form>
                                 @endif
                             </div>

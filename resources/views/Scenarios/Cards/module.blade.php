@@ -1,12 +1,12 @@
-﻿<div id="state-card" class="card mb-3 d-none">
+<div id="state-card" class="card mb-3 d-none">
     <div class="card-body">
-        <h5 class="card-title">Изменение состояния устройства</h5>
-        <p class="text-muted small mb-3">Выберите устройство и команду, которая будет отправлена при срабатывании сценария.</p>
+        <h5 class="card-title">{{ __('ui.scenarios.state_change') }}</h5>
+        <p class="text-muted small mb-3">{{ __('ui.scenarios.cards.module_desc') }}</p>
 
         <x-device-choose
             name="change_module"
             :devices="$devices"
-            label="Устройство"
+            :label="__('ui.scenarios.cards.module_device')"
             old="{{ isset($scenario) ? optional($scenario->scenarioModule)->devices_id : '' }}"
         />
 
@@ -14,12 +14,12 @@
             name="change_command"
             deviceChoseName="change_module"
             old="{{ isset($scenario) ? optional($scenario->scenarioModule)->command : '' }}"
-            label="Команда"
+            :label="__('ui.scenarios.cards.module_command')"
         />
 
         <x-device-arg-cmd-choose
             name="change_arg"
-            label="Аргумент"
+            :label="__('ui.scenarios.cards.module_argument')"
             old="{{ isset($scenario) ? optional($scenario->scenarioModule)->arg : '' }}"
         />
     </div>
