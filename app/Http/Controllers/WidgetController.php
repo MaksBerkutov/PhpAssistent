@@ -29,9 +29,11 @@ class WidgetController extends Controller
             'widget_name' => ['required', 'string', 'max:255'],
             'accesses_key' => ['nullable', 'string', 'max:255'],
             'input_params' => ['nullable', 'string', 'max:255'],
+            'version' => ['nullable', 'string', 'max:50'],
         ]);
 
-        $validated['is_private'] = !$validated['accesses_key'] == null;
+        $validated['version'] = $validated['version'] ?? '1.0.0';
+        $validated['is_private'] = !empty($validated['accesses_key']);
         Widget::create($validated);
 
         return redirect()->route('widget')->with('success', __('ui.widgets.messages.created'));
@@ -138,6 +140,7 @@ class WidgetController extends Controller
             [
                 'name' => $name,
                 'widget_name' => $widgetName,
+                'version' => $version,
                 'accesses_key' => $accessesKey,
                 'input_params' => json_encode($schema),
                 'updated_at' => now(),

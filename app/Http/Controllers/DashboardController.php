@@ -22,8 +22,9 @@ class DashboardController extends Controller
         $widgets = $access == null
             ? Widget::where('is_private', false)->get()
             : Widget::where('accesses_key', $access)->get();
+        $devices = Device::where('user_id', Auth::id())->get();
 
-        return view('Dashboard.create', compact('widgets'));
+        return view('Dashboard.create', compact('widgets', 'devices'));
     }
 
     public function add($id)
