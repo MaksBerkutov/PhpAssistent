@@ -135,4 +135,33 @@ h6 {
     transition: all 0.3s ease-in-out;
 }
 
+body.app-shell {
+    background-color: transparent;
+}
 
+#main .profile-wrap {
+    max-width: 100%;
+}
+
+#main .profile-wrap .padding {
+    padding: clamp(0.75rem, 2vw, 2rem) !important;
+}
+
+#main .profile-wrap .row.container {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#main .profile-wrap .user-card-full .user-profile {
+    border-radius: 5px 0 0 5px;
+}
+
+@media (max-width: 767px) {
+    #main .profile-wrap .padding {
+        padding: 0 !important;
+    }
+
+    #main .profile-wrap .user-card-full .user-profile {
+        border-radius: 5px 5px 0 0;
+    }
+}

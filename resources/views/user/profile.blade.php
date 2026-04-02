@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{asset('css/profile.css')}}">
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container profile-wrap">
         <div class="page-content page-container" id="page-content">
             <div class="padding">
                 <div class="row container d-flex justify-content-center">

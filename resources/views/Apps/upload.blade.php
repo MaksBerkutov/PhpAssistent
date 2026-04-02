@@ -72,6 +72,34 @@
             font-size: 0.76rem;
             color: var(--ink-soft);
         }
+
+        @media (max-width: 640px) {
+            .upload-card {
+                padding: 12px;
+            }
+
+            .upload-drop-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .upload-drop-btn {
+                width: 100%;
+            }
+
+            .upload-file-name {
+                width: 100%;
+            }
+
+            .upload-card .btn {
+                width: 100%;
+            }
+
+            .upload-card .btn + .btn {
+                margin-top: 8px;
+                margin-left: 0 !important;
+            }
+        }
     </style>
 @endsection
 

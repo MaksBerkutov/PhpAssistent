@@ -11,8 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +38,18 @@
             --public-chip-active-bg: #d8642c;
             --public-chip-active-text: #fff7f2;
             color-scheme: dark;
+        }
+
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        body.public-shell {
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding-top: 58px;
         }
 
         .public-prefbar {
@@ -97,15 +108,22 @@
         }
 
         @media (max-width: 560px) {
+            body.public-shell {
+                padding-top: 86px;
+            }
+
             .public-prefbar {
                 top: 8px;
                 left: 8px;
                 right: 8px;
                 justify-content: space-between;
+                flex-wrap: wrap;
+                align-items: flex-start;
             }
 
             .public-prefgroup {
                 font-size: 0.69rem;
+                flex-wrap: wrap;
             }
 
             .public-prefchip {

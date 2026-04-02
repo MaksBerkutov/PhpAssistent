@@ -121,6 +121,40 @@
             height: 0;
             display: none;
         }
+
+        @media (max-width: 760px) {
+            .home-hero {
+                border-radius: 18px;
+                padding: 16px;
+            }
+
+            .home-subtitle {
+                max-width: 100%;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .card-scroll {
+                max-height: 280px;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .home-badge {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 @endsection
 

@@ -85,6 +85,34 @@
             font-size: 0.76rem;
             color: var(--ink-soft);
         }
+
+        @media (max-width: 640px) {
+            .update-card {
+                padding: 12px;
+            }
+
+            .update-drop-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .update-drop-btn {
+                width: 100%;
+            }
+
+            .update-file-name {
+                width: 100%;
+            }
+
+            .update-card .btn {
+                width: 100%;
+            }
+
+            .update-card .btn + .btn {
+                margin-top: 8px;
+                margin-left: 0 !important;
+            }
+        }
     </style>
 @endsection
 

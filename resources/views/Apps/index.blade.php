@@ -67,6 +67,24 @@
             color: var(--ink-soft);
             background: color-mix(in srgb, var(--surface-strong) 86%, transparent);
         }
+
+        @media (max-width: 640px) {
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .apps-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .apps-header .btn {
+                width: 100%;
+            }
+
+            .apps-card {
+                min-height: 0;
+            }
+        }
     </style>
 @endsection
 

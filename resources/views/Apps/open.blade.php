@@ -38,6 +38,21 @@
         .app-runtime-inner > * {
             max-width: 100%;
         }
+
+        @media (max-width: 640px) {
+            .app-runtime {
+                padding: 10px;
+                border-radius: 14px;
+            }
+
+            .app-runtime-inner {
+                max-height: 62vh;
+            }
+
+            .app-open-head .btn {
+                width: 100%;
+            }
+        }
     </style>
 @endsection
 
