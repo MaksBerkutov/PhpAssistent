@@ -50,7 +50,8 @@ class DeviceController extends Controller
 
         try {
             $validated['user_id'] = Auth::id();
-            $initCommand = explode('.', DevicesReqest::sendReqest($validated['url'], env('INILIZATION_COMMAND')));
+            $initCommandName = env('INILIZATION_COMMAND', 'SERV_GAI');
+            $initCommand = explode('.', DevicesReqest::sendReqest($validated['url'], $initCommandName));
             $validated['name_board'] = array_shift($initCommand);
             $validated['ota'] = array_shift($initCommand);
             $validated['configuration'] = array_shift($initCommand);
@@ -97,7 +98,8 @@ class DeviceController extends Controller
             return redirect()->route('devices')->with('error', __('ui.devices.messages.no_access'));
         }
 
-        DevicesReqest::sendReqest($device->url, env('SET_CFG_COMMAND'), $validated['jsonData']);
+        $setCfgCommand = env('SET_CFG_COMMAND', 'SERV_SCFG');
+        DevicesReqest::sendReqest($device->url, $setCfgCommand, $validated['jsonData']);
 
         return redirect()->route('devices')->with('success', __('ui.devices.messages.config_updated'));
     }
@@ -114,7 +116,8 @@ class DeviceController extends Controller
         }
 
         $id = $request['id'];
-        $jsonData = DevicesReqest::sendReqest($device->url, env('GET_CFG_COMMAND'));
+        $getCfgCommand = env('GET_CFG_COMMAND', 'SERV_GCFG');
+        $jsonData = DevicesReqest::sendReqest($device->url, $getCfgCommand);
 
         return view('Devices.config', compact('jsonData', 'id'));
     }
