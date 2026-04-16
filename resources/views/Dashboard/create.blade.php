@@ -103,7 +103,7 @@
             <section class="page-grid">
                 @foreach($widgets as $widget)
                     @php
-                        $commands = json_decode($widget->input_params, true) ?? [];
+                        $commands = is_array($widget->input_params) ? $widget->input_params : (json_decode($widget->input_params, true) ?? []);
                     @endphp
                     <article class="card widget-card">
                         <div class="card-header d-flex justify-content-between align-items-center gap-2">
@@ -229,7 +229,7 @@
             return [
                 $widget->id => [
                     'name' => $widget->name,
-                    'params' => json_decode($widget->input_params, true) ?? [],
+                    'params' => is_array($widget->input_params) ? $widget->input_params : (json_decode($widget->input_params, true) ?? []),
                 ],
             ];
         });

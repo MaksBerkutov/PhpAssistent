@@ -34,7 +34,11 @@ Route::middleware('auth')->group(function () {
     //Home
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/home/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
+    Route::get('/home/profile', [App\Http\Controllers\PublicApiSettingsController::class, 'index'])->name('profile');
+    Route::put('/home/profile/public-api', [App\Http\Controllers\PublicApiSettingsController::class, 'updateSettings'])->name('settings.public-api.update');
+    Route::post('/home/profile/public-api/tokens', [App\Http\Controllers\PublicApiSettingsController::class, 'storeToken'])->name('settings.public-api.tokens.store');
+    Route::put('/home/profile/public-api/tokens/{token}', [App\Http\Controllers\PublicApiSettingsController::class, 'updateToken'])->name('settings.public-api.tokens.update');
+    Route::delete('/home/profile/public-api/tokens/{token}', [App\Http\Controllers\PublicApiSettingsController::class, 'destroyToken'])->name('settings.public-api.tokens.destroy');
     //Devices
     Route::get('/devices', [App\Http\Controllers\DeviceController::class, 'index'])->name('devices');
     Route::post('/devices', [App\Http\Controllers\DeviceController::class, 'send_command'])->name('devices.send');

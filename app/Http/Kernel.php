@@ -67,5 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkRole' => \App\Http\Middleware\CheckRole::class,
         'IOT' => \App\Http\Middleware\CheckModule::class,
+        'public-api.access' => \App\Http\Middleware\EnsurePublicApiAccess::class,
+        'public-api.ability' => \App\Http\Middleware\EnsurePublicApiAbility::class,
     ];
 }

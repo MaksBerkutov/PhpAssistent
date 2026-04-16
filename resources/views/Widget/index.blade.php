@@ -76,7 +76,7 @@
             <section class="widget-admin-grid">
                 @foreach ($widgets as $widget)
                     @php
-                        $commands = json_decode($widget->input_params, true) ?? [];
+                        $commands = is_array($widget->input_params) ? $widget->input_params : (json_decode($widget->input_params, true) ?? []);
                     @endphp
 
                     <article class="card widget-admin-card">

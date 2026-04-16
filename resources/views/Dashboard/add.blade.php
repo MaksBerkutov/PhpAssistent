@@ -19,7 +19,7 @@
 
 @section('content')
     @php
-        $commands = json_decode($widget->input_params, true) ?? [];
+        $commands = is_array($widget->input_params) ? $widget->input_params : (json_decode($widget->input_params, true) ?? []);
     @endphp
 
     <div class="page-shell">

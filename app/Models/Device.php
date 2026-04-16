@@ -22,4 +22,9 @@ class Device extends Model
         'configuration'
     ];
 
+    protected $casts = [
+        'available' => 'boolean',
+        'ota' => 'boolean',
+        'configuration' => 'boolean',
+    ];
 }

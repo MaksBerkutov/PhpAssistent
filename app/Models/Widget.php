@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Widget extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'widget_name',
@@ -20,7 +21,13 @@ class Widget extends Model
         'version',
         'accesses_key'
     ];
+
     protected $casts = [
         'accesses_key' => 'hashed',
+        'is_private' => 'boolean',
+    ];
+
+    protected $hidden = [
+        'accesses_key',
     ];
 }

@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'image',
         'role',
+        'public_api_enabled',
     ];
 
     /**
@@ -46,5 +47,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'public_api_enabled' => 'boolean',
     ];
 }

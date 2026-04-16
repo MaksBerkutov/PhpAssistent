@@ -59,7 +59,7 @@
             <section class="device-list">
                 @foreach($devices as $device)
                     @php
-                        $commands = json_decode($device->command, true) ?? [];
+                        $commands = is_array($device->command) ? $device->command : (json_decode($device->command, true) ?? []);
                         $alternate = true;
                     @endphp
 

@@ -29,7 +29,7 @@
                                              :argument="$widget->argument"
                                              :name="$widget->name"
                                              :id="$widget->id"
-                                             :data="json_decode($widget->values)">
+                                             :data="is_array($widget->values) ? $widget->values : json_decode($widget->values)">
                         </x-dynamic-component>
                     @endforeach
                 </div>

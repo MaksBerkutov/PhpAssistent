@@ -22,6 +22,7 @@ class Dashboard extends Model
         'argument',
         'ota'
     ];
+
     public function widget()
     {
         return $this->belongsTo(Widget::class, 'widget_id');
